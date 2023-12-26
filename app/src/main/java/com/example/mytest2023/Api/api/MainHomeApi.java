@@ -14,7 +14,7 @@ import retrofit2.http.POST;
 import retrofit2.http.Query;
 
 /**
- * Created by 钟文祥 on 2023/6/15.
+ * Created by 钟文祥2 on 2023/6/15.
  * Describer:主页api
  */
 public interface MainHomeApi {
