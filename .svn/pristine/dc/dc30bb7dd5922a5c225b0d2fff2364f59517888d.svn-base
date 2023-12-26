@@ -1,0 +1,46 @@
+package com.example.mytest2023.module.mvvm;
+
+import android.view.View;
+
+import com.example.mytest2023.R;
+import com.example.mytest2023.databinding.ActivityUserItemBinding;
+import com.example.mytest2023.model.home.ARSceneResponse;
+
+import androidx.lifecycle.Observer;
+
+/**
+ * Created by 钟文祥 on 2023/6/15.
+ * Describer: 继承BaseMvvmActivity
+ * * https://juejin.cn/post/6844903968884146184
+ */
+public class UserItemActivity extends BaseMvvmActivity<UserItemViewModel, ActivityUserItemBinding> {
+
+    @Override
+    protected int getLayoutId() {
+        return R.layout.activity_user_item;
+    }
+
+
+    @Override
+    protected void afterCreate() {
+        mViewDataBind.button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                testgetARSceneResponse();
+            }
+        });
+    }
+
+    private void testgetARSceneResponse() {
+        mViewModel.testgetARSceneResponse().observe(this, new Observer<ARSceneResponse>() {
+            @Override
+            public void onChanged(ARSceneResponse arSceneResponse) {
+                updateView(arSceneResponse);
+            }
+        });
+    }
+
+    private void updateView(ARSceneResponse arSceneResponse) {
+        mViewDataBind.button.setText(arSceneResponse.getCategoryList().get(0).getName());
+    }
+}

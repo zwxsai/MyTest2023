@@ -1,0 +1,52 @@
+package com.example.mytest2023.room.helper;
+
+import android.annotation.SuppressLint;
+
+import com.example.mytest2023.base.MyApp;
+
+import androidx.room.Room;
+import io.reactivex.Flowable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.functions.Consumer;
+import io.reactivex.schedulers.Schedulers;
+
+/**
+ * Created by 钟文祥 on 2023/6/16.
+ * Describer: 单例调出room数据库对象
+ * https://juejin.cn/post/6844903966086529038
+ */
+public class DBInstance {
+    //private static final String DB_NAME = "/sdcard/LianSou/room_iqiyi.db";
+    private static final String DB_NAME = "room_iqiyi";
+    public static DBMaster dbMaster;
+
+    public static DBMaster getInstance() {
+        if (dbMaster == null) {
+            synchronized (DBInstance.class) {
+                if (dbMaster == null) {
+                    dbMaster = Room.databaseBuilder(MyApp.getContextObject(), DBMaster.class, DB_NAME)
+//                            .allowMainThreadQueries() //可以在主线程使用 但推荐不用
+//                            .addMigrations(DBMaster.MIGRATION_1_2)//版本升级时加上下面这一行
+                            .build();
+                }
+            }
+        }
+        return dbMaster;
+    }
+
+
+    @SuppressLint("CheckResult")
+    public static <T> void daoExecution(Flowable<T> value, OnDaoMainThreadListener<T> listener) {
+        value.subscribeOn(Schedulers.io()).
+                observeOn(AndroidSchedulers.mainThread()).
+                subscribe(new Consumer<T>() {
+                    @Override
+                    public void accept(T t) throws Exception {
+                        if (listener != null) {
+                            listener.onNext(t);
+                        }
+                    }
+                });
+    }
+}
+

@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <com.example.mytest2023.widget.other.CusLinearLayout
+        android:id="@+id/CusLinearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <com.example.mytest2023.widget.other.CusText
+        android:id="@+id/CusText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <ImageView
+        android:id="@+id/image1"
+        android:layout_width="100dp"
+        android:layout_height="150dp" />
+
+    <TextView
+        android:id="@+id/obj1"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:background="@color/gray" />
+
+    <com.eric.android.view.ExpandableTextView
+        android:id="@+id/expand_tv1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:background="#aaccdd"
+        android:textColor="@color/red"
+        app:collapseDrawable="@drawable/icon_content_collap"
+        app:collapseLines="2"
+        app:expandDrawable="@drawable/icon_content_expand"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:tipPosition="align_right"
+        app:tipsColor="#08f017" />
+
+    <com.eric.android.view.ExpandableTextView
+        android:id="@+id/expand_tv2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="8dp"
+        android:textColor="#3f8cd9"
+        app:collapseDrawable="@drawable/icon_content_collap"
+        app:collapseLines="3"
+        app:expandDrawable="@drawable/icon_content_expand"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/expand_tv1"
+        app:tipPosition="bottom_start"
+        app:tipsColor="#d521e9" />
+
+    <com.eric.android.view.ExpandableTextView
+        android:id="@+id/expand_tv3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="8dp"
+        android:textColor="#57279f"
+        app:collapseDrawable="@drawable/icon_content_collap"
+        app:collapseLines="3"
+        app:expandDrawable="@drawable/icon_content_expand"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/expand_tv2"
+        app:tipPosition="bottom_center"
+        app:tipsColor="#08baf0" />
+
+    <com.eric.android.view.ExpandableTextView
+        android:id="@+id/expand_tv4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="8dp"
+        android:background="#ccdd00"
+        android:textColor="#c9b92a"
+        app:collapseLines="3"
+        app:collapseTipLabel="点击文本可以收起"
+        app:expandTipLabel="点击文本可以展开"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/expand_tv3"
+        app:tipPosition="align_right"
+        app:tipsColor="#f02b08" />
+
+</LinearLayout>

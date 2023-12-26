@@ -1,0 +1,17 @@
+<resources>
+
+    <dimen name="loading_width">110sp</dimen>
+
+    <!-- *******************以下不用动*************************-->
+    <dimen name="large">20sp</dimen>
+    <dimen name="medium">18sp</dimen>
+    <dimen name="small">16sp</dimen>
+    <dimen name="Xsmall">14sp</dimen>
+    <dimen name="XXsmall">12sp</dimen>
+    <dimen name="XXXsmall">10sp</dimen>
+
+
+    <dimen name="bigLarge">28sp</dimen>
+    <dimen name="map_rsrp">34sp</dimen>
+    <dimen name="fab_margin">16dp</dimen>
+</resources>

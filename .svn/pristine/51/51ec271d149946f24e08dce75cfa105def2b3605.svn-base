@@ -1,0 +1,6 @@
+////用于配置 Gradle 的设置，例如定义项目的名称、子项目等信息
+////https://blog.csdn.net/shulianghan/article/details/129802390
+//定义项目名称
+rootProject.name = "MyTest2023"
+//定义子项目
+include ':app'

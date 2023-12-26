@@ -1,0 +1,9 @@
+package com.example.mytest2023.room.helper;
+
+/**
+ * Created by 钟文祥 on 2023/6/17.
+ * Describer: 数据库执行后在主线程执行事件
+ */
+public interface OnDaoMainThreadListener<T> {
+    void onNext(T t);
+}

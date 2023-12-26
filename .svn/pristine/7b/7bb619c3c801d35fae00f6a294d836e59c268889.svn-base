@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <import type="com.example.mytest2023.module.mvvm.LoginTestActivityMVVM" />
+
+        <variable
+            name="isShow"
+            type="Boolean" />
+
+        <variable
+            name="txtMsg"
+            type="String" />
+
+        <variable
+            name="UserItem"
+            type="com.example.mytest2023.model.design.jianzao.UserItem" />
+
+        <variable
+            name="LoginTestActivityMVVMHandle"
+            type="com.example.mytest2023.module.mvvm.LoginTestActivityMVVM.LoginTestActivityMVVMHandle" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <EditText
+            android:id="@+id/edit1"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:hint="用户名"
+            android:text="@={UserItem.name,default=abc}" />
+
+        <EditText
+            android:id="@+id/edit2"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:hint="年龄"
+            android:text='@={UserItem.age+"",default=12}' />
+
+        <Button
+            android:id="@+id/btn1"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:onClick="@{()->LoginTestActivityMVVMHandle.OnClick()}"
+            android:text="显示上面数据" />
+
+        <Button
+            android:id="@+id/btn2"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:onClick="@{()->LoginTestActivityMVVMHandle.OnClick2()}"
+            android:text="修改实体类 之后更新view" />
+
+
+        <TextView
+            android:id="@+id/txt1"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:gravity="center"
+            android:text="@{txtMsg,default=MVVM}"
+            android:textColor="@color/colorPrimary"
+            android:textSize="@dimen/medium" />
+
+        <TextView
+            android:id="@+id/txt2"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:gravity="center"
+            android:text="@{LoginTestActivityMVVM.init1(UserItem.name),default=静态方法}"
+            android:textColor="@color/colorPrimary"
+            android:textSize="@dimen/medium" />
+
+        <TextView
+            android:id="@+id/txt3"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:gravity="center"
+            android:text="显示"
+            android:textColor="@color/colorPrimary"
+            android:textSize="@dimen/medium" />
+    </LinearLayout>
+</layout>

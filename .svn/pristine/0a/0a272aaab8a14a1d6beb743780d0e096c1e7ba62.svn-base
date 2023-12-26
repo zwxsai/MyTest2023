@@ -1,0 +1,141 @@
+package com.example.mytest2023.base;
+
+import android.app.Activity;
+import android.app.Application;
+import android.content.Context;
+import android.database.sqlite.SQLiteDatabase;
+import android.os.Bundle;
+
+import com.example.mytest2023.BuildConfig;
+import com.example.mytest2023.greendao.dao.DaoMaster;
+import com.example.mytest2023.greendao.dao.DaoSession;
+import com.example.mytest2023.greendao.manager.MyOpenHelper;
+import com.example.mytest2023.helper.AppHelper;
+import com.example.mytest2023.widget.YiChang.CrashHandler;
+import com.tencent.bugly.crashreport.CrashReport;
+
+import androidx.multidex.MultiDex;
+
+/**
+ * Created by 钟文祥 on 2023-04-10.
+ * Describer:
+ */
+public class MyApp extends Application {
+    /** 当前activity数 */
+    private int activityCount = 0;
+    /** 是否在前台 */
+    private boolean isForeground = false;
+
+    private static Context context;
+
+    public static Context getContextObject() {
+        return context;
+    }
+
+    @Override
+    public void onCreate() {
+        super.onCreate();
+
+        context = getApplicationContext();
+
+        //自己异常处理
+        CrashHandler crashHandler = CrashHandler.getInstance();
+        crashHandler.init(this);
+
+        //初始化腾讯bugly
+        initBugly();
+
+        //配置数据库
+        createGreenDao();
+
+
+        //注册生命周期监听
+        registerActivityLifecycleCallbacks(new MyActivityLifecycleCallbacks());
+
+
+    }
+
+    @Override
+    protected void attachBaseContext(Context base) {
+        super.attachBaseContext(base);
+        MultiDex.install(this);
+    }
+
+    /** 初始化腾讯bugly */
+    private void initBugly() {
+        Context context = getApplicationContext();
+        // 获取当前包名
+        String packageName = context.getPackageName();
+        // 获取当前进程名
+        String processName = AppHelper.getProcessName(android.os.Process.myPid());
+        // 设置是否为上报进程
+        CrashReport.UserStrategy strategy = new CrashReport.UserStrategy(context);
+        strategy.setUploadProcess(processName == null || processName.equals(packageName));
+        CrashReport.initCrashReport(context, BuildConfig.BUGLY_APPID, BuildConfig.DEBUG);
+    }
+
+    private static DaoSession daoSession;
+
+    private static void createGreenDao() {
+        //创建数据库shop.db"
+        MyOpenHelper helper = new MyOpenHelper(getContextObject(), BuildConfig.DB_NAME, null);
+        //获取可写数据库
+        SQLiteDatabase db = helper.getWritableDatabase();
+        //获取数据库对象
+        DaoMaster daoMaster = new DaoMaster(db);
+        //获取Dao对象管理者
+        daoSession = daoMaster.newSession();
+    }
+
+    public static DaoSession getDaoSession() {
+        if (daoSession == null) {
+            createGreenDao();
+        }
+        return daoSession;
+    }
+
+    /** Activity 生命周期监听，用于监控app前后台状态切换 */
+    private class MyActivityLifecycleCallbacks implements ActivityLifecycleCallbacks {
+        @Override
+        public void onActivityCreated(Activity activity, Bundle savedInstanceState) {
+
+        }
+
+        @Override
+        public void onActivityStarted(Activity activity) {
+            activityCount++;
+            //回到前台
+            if (activityCount == 1) {
+                isForeground = true;
+            }
+        }
+
+        @Override
+        public void onActivityResumed(Activity activity) {
+
+        }
+
+        @Override
+        public void onActivityPaused(Activity activity) {
+
+        }
+
+        @Override
+        public void onActivityStopped(Activity activity) {
+            activityCount--;
+            if (activityCount == 0) {
+                isForeground = false;
+            }
+        }
+
+        @Override
+        public void onActivitySaveInstanceState(Activity activity, Bundle outState) {
+
+        }
+
+        @Override
+        public void onActivityDestroyed(Activity activity) {
+
+        }
+    }
+}

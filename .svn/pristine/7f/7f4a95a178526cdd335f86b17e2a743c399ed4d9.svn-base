@@ -1,0 +1,15 @@
+package com.example.mytest2023.module.Foundation;
+
+/**
+ * Created by 钟文祥 on 2023-04-20.
+ * Describer: BroadcastReceiver
+ * 参考   https://blog.csdn.net/suiyue010211/article/details/125951403
+ */
+public class BroadcastReceiverActivity extends FoundationActivity {
+
+
+    @Override
+    public void initView() {
+
+    }
+}

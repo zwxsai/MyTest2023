@@ -1,0 +1,26 @@
+package com.example.mytest2023.module.mvvm;
+
+import android.app.Application;
+
+import androidx.annotation.NonNull;
+import androidx.databinding.ViewDataBinding;
+import androidx.lifecycle.AndroidViewModel;
+import androidx.lifecycle.ViewModel;
+
+/**
+ * Created by 钟文祥 on 2023/6/15.
+ * Describer:
+ */
+//继承AndroidViewModel，是因为里面要用context时候直接可以getApplication()
+public abstract class BaseViewModel extends AndroidViewModel {
+
+    public BaseViewModel(@NonNull Application application) {
+        super(application);
+    }
+
+    @Override
+    protected void onCleared() {
+        super.onCleared();
+
+    }
+}

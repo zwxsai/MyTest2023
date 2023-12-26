@@ -1,0 +1,48 @@
+//顶级生成文件，您可以在其中添加所有子项目/模块通用的配置选项。
+buildscript { //构建脚本
+    ext.kotlin_version = '1.6.21'
+    ext.greendao_version = '3.3.0'
+
+    //构建过程依赖的仓库
+    repositories {
+        google()
+        jcenter()
+        mavenCentral()//代码托管仓库
+    }
+    dependencies { //依靠
+        //Gradle 插件及使用版本
+        classpath 'com.android.tools.build:gradle:7.0.4'
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+        classpath "org.greenrobot:greendao-gradle-plugin:$greendao_version" //GreenDao3依赖
+        classpath 'com.jakewharton:butterknife-gradle-plugin:10.2.3'
+
+        //注意：不要将应用程序依赖项放在这里；他们属于
+        //app(单个模块)/build.gradle文件中
+    }
+}
+
+//这里面配置整个项目依赖的仓库,这样每个module就不用配置仓库了
+allprojects {
+    repositories {
+        //代码托管仓库，可以引用 jcenter() 上任何的开源项目
+        google()
+        jcenter()
+        maven { url 'https://jitpack.io' }//添加jitpack仓库地址
+    }
+
+    // 可能加快 Android Studio 编译的办法
+    tasks.withType(JavaCompile) {
+        //使在一个单独的守护进程编译
+        options.fork = true
+        //增量编译
+        options.incremental = true
+    }
+
+}
+
+// 运行gradle clean时，执行此处定义的task。
+// 该任务继承自Delete，删除根目录中的build目录。
+// 相当于执行Delete.delete(rootProject.buildDir)
+task clean(type: Delete) {
+    delete rootProject.buildDir
+}

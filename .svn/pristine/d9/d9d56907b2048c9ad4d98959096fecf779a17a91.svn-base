@@ -1,0 +1,32 @@
+package com.example.mytest2023.module.Foundation;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+import android.os.Bundle;
+
+
+/**
+ * Created by 钟文祥 on 2023/4/24.
+ * Describer：数据结构
+ * <p>
+ * 参考
+ */
+public class ShuJuJieGouActivity extends FoundationActivity {
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+//        setContentView(R.layout.activity_shu_ju_jie_gou);
+
+    }
+
+    @Override
+    public void initView() {
+        txt1.setText("数据结构");
+        txt2.setText(data);
+
+        int[] arr1 = new int[]{};//动态
+        int[] arr2 = new int[3];
+        int[] arr3 = new int[]{1, 2, 3};
+    }
+}

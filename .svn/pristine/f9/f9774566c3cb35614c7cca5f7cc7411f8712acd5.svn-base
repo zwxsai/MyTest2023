@@ -1,0 +1,51 @@
+package com.example.mytest2023.module.mvvm;
+
+import android.app.Application;
+
+import com.example.mytest2023.Api.Service.TestService;
+import com.example.mytest2023.Api.Utils.ApiException;
+import com.example.mytest2023.Api.Utils.RxSubscriber;
+import com.example.mytest2023.model.home.ARSceneResponse;
+
+import androidx.annotation.NonNull;
+import androidx.lifecycle.MutableLiveData;
+import io.reactivex.disposables.Disposable;
+
+/**
+ * Created by 钟文祥 on 2023/6/15.
+ * https://juejin.cn/post/6844903968884146184
+ */
+public class UserItemViewModel extends BaseViewModel {
+
+    public UserItemViewModel(@NonNull Application application) {
+        super(application);
+    }
+
+    @Override
+    protected void onCleared() {
+        super.onCleared();
+    }
+
+    public MutableLiveData<ARSceneResponse> testgetARSceneResponse() {
+        //因为用到LiveData，我觉得都不需要切换到主线程了。LiveData可以帮我们做
+        //调用接口，返回我们的MutableLiveData<List<BannerBean>>
+        final MutableLiveData<ARSceneResponse> liveData = new MutableLiveData<>();
+        TestService.testgetARSceneResponse().subscribe(new RxSubscriber<ARSceneResponse>(getApplication(), false) {
+            @Override
+            public void onAddDisposable(Disposable d) {
+
+            }
+
+            @Override
+            public void onApiNext(ARSceneResponse value) {
+                liveData.postValue(value);
+            }
+
+            @Override
+            public void onApiError(ApiException ex) {
+
+            }
+        });
+        return liveData;
+    }
+}

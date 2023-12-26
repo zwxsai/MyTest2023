@@ -1,0 +1,21 @@
+package com.example.mytest2023.module.Foundation;
+
+import android.os.Bundle;
+
+/**
+ * Created by 钟文祥 on 2023/4/12.
+ * Describer：启动activity
+ */
+public class Open2Activity3 extends FoundationActivity {
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+    }
+
+    @Override
+    public void initView() {
+        txt1.setText("第3页面:");
+        txt2.setText("第3页面:");
+    }
+}

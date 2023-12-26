@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="oval">
+    <!-- "rectangle" | "oval" | "line" | "ring" 矩形（rectangle）、椭圆形(oval)、线性形状(line)、环形(ring)-->
+    <!--solid 填充颜色-->
+    <solid android:color="@color/black_transparent" />
+    <!-- corners 圆角-->
+    <!--<corners android:radius="3dp" />-->
+    <!--<corners-->
+    <!--android:bottomLeftRadius="50dp"-->
+    <!--android:bottomRightRadius="50dp"-->
+    <!--android:topLeftRadius="50dp"-->
+    <!--android:topRightRadius="50dp" />-->
+    <!--stroke 边框-->
+    <!-- <stroke
+         android:width="2dp"
+         android:color="@color/bisque" />-->
+</shape>

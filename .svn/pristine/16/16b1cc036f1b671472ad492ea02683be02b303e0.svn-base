@@ -1,0 +1,28 @@
+//根目录下 build.gradle 构建脚本分析
+buildscript {
+    ext.kotlin_version = '1.5.20'
+    ext.greendao_version = '3.3.0'
+    repositories {
+        google()
+        jcenter()
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:7.0.4'
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+        classpath "org.greenrobot:greendao-gradle-plugin:$greendao_version" //GreenDao3依赖
+        classpath 'com.jakewharton:butterknife-gradle-plugin:10.2.3'
+    }
+}
+
+allprojects {
+    repositories {
+        google()
+        jcenter()
+        maven { url 'https://jitpack.io' }//添加jitpack仓库地址
+    }
+}
+
+task clean(type: Delete) {
+    delete rootProject.buildDir
+}

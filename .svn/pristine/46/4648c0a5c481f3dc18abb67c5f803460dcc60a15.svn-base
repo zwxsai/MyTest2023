@@ -1,0 +1,26 @@
+package com.example.mytest2023.module.Foundation;
+
+import android.content.Intent;
+
+import com.example.mytest2023.helper.OnItemRecyclerListener;
+
+/**
+ * Created by 钟文祥 on 2023/4/12.
+ * Describer：启动activity
+ */
+public class Open2Activity1 extends FoundationActivity {
+
+    @Override
+    public void initView() {
+        txt1.setText("第一页面:");
+        txt2.setText(data);
+        listener = new OnItemRecyclerListener() {
+            @Override
+            public void onClick(int viewId, Object object) {
+                Intent intent = new Intent(Open2Activity1.this, OpenServiceActivity.class);
+                intent.putExtra("data", "第二页面的内容");
+                startActivity(intent);
+            }
+        };
+    }
+}

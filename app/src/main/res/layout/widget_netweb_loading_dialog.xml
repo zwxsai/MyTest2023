@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/tips_bg"
+    android:gravity="center">
+
+
+    <!--<com.tuyenmonkey.mkloader.MKLoader-->
+    <!--android:id="@+id/MKLoader"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_centerInParent="true"-->
+    <!--android:background="@color/transparent"-->
+    <!--app:mk_color="@color/cornflowerblue"-->
+    <!--app:mk_type="LineSpinner" />-->
+
+    <ProgressBar
+        android:id="@+id/netweb_progress"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_centerHorizontal="true" />
+
+
+    <TextView
+        android:id="@+id/MKLoader_Text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/netweb_progress"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="5dp"
+        android:background="@color/transparent"
+        android:ellipsize="end"
+        android:gravity="center"
+        android:lines="1"
+        android:text="AAA"
+        android:textColor="@color/white"
+        android:textSize="@dimen/Xsmall"
+        android:visibility="visible" />
+
+
+</RelativeLayout>

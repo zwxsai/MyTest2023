@@ -1,0 +1,36 @@
+<!--补间动画-->
+<set xmlns:android="http://schemas.android.com/apk/res/android">
+    <!--    透明度-->
+    <alpha
+        android:duration="1000"
+        android:fromAlpha="0.0"
+        android:toAlpha="1.0" />
+
+    <!--    缩放-->
+    <scale
+        android:duration="1000"
+        android:fillAfter="false"
+        android:fromXScale="0.0"
+        android:fromYScale="0.0"
+        android:interpolator="@android:anim/accelerate_decelerate_interpolator"
+        android:pivotX="50%"
+        android:pivotY="50%"
+        android:toXScale="1.4"
+        android:toYScale="1.4" />
+
+    <!--    平移-->
+    <translate
+        android:duration="2000"
+        android:fromXDelta="30"
+        android:fromYDelta="30"
+        android:toXDelta="-80"
+        android:toYDelta="300" />
+
+    <!--    旋转-->
+    <rotate
+        android:duration="3000"
+        android:fromDegrees="0"
+        android:pivotX="50%"
+        android:pivotY="50%"
+        android:toDegrees="+350" />
+</set>

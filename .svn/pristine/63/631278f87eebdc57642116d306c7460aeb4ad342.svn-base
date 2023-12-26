@@ -1,0 +1,313 @@
+plugins {//应用插件,此处就不会有插件版本
+    id 'com.android.application'
+    id 'kotlin-android'
+    id 'org.greenrobot.greendao'
+    id 'com.jakewharton.butterknife'
+
+}
+
+//用于定义项目的构建过程、依赖关系和其他构建相关的设置。在该文件中，您可以定义任务、插件、依赖项和其他构建相关设置。
+//出现 could not read ok from ADB Server
+//1.netstat -ano | findstr :5037   找到processID
+//2.tasklist | findstr processID
+//2.1任务管理器删除
+//3.adb kill-server
+//4.adb start-server
+
+//adb tcpip 5555 无线连接 cd D:\Sdk\platform-tools > d: > adb connect 192.168.137.118
+
+//*#*#2846579#*#*    USB端口修改生产模式   LOG 设置打开,全选
+//()()2846579()()
+
+//发布到应用商场 https://blog.csdn.net/vipfhl/article/details/127725198
+//多渠道打包https://blog.csdn.net/k_bb_666/article/details/79113222 和 https://www.jianshu.com/p/533240d222d3
+//输入gradlew assembleRelease 打所有包 打出release 混淆签名打包  gradlew assembleBaiduRelease
+//当不知是什么错误时 as的终端  cmd 进入根目录 gradlew compileDebugSources --stacktrace -info
+//混淆时看看warn日志
+
+//调试版 65:F9:DA:5B:F3:B7:D7:2C:61:6A:CA:DC:95:C4:EC:7D:98:B4:07:7B
+//发布版 B3:A0:D1:D2:00:BA:97:0E:F6:91:FB:04:63:C8:8C:FC:FD:23:97:2C
+//https://www.cnblogs.com/chenxkang/p/9154408.html
+
+android {
+    namespace 'com.example.mytest2023'
+    compileSdk 31
+
+    defaultConfig {
+        applicationId "com.example.mytest2023"  //productFlavors 设置的不同环境包名会覆盖 defaultConfig 里面的applicationId
+        minSdk 23
+        targetSdk 31
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        ndk {
+            // 设置支持的SO库架构
+            abiFilters 'armeabi' //, 'x86', 'armeabi-v7a', 'x86_64', 'arm64-v8a'
+        }
+
+        packagingOptions {
+            exclude 'META-INF/proguard/androidx-annotations.pro'
+        }
+
+        //--------自定义参数----------
+        //腾讯bugly的appId
+        buildConfigField 'String', 'BUGLY_APPID', '"8a88449c3d"'
+        //数据库名称
+        buildConfigField 'String', 'DB_NAME', '"mytesteles-db"'
+
+    }
+
+    //使用DataBinding  https://blog.csdn.net/weixin_53431933/article/details/126372227
+    dataBinding {
+        enabled = true
+    }
+
+//    定义源代码目录
+    sourceSets {
+        main {
+            //让AS识别libs下的.so第三方包
+            jniLibs.srcDirs = ['libs']
+        }
+    }
+
+    //greendao配置  https://blog.csdn.net/wzgbgz/article/details/79140056
+    greendao {
+        //数据库的schema版本，也可以理解为数据库版本号
+        schemaVersion 1       //设置DaoMaster、DaoSession、Dao包名，也就是要放置这些类的包的全路径。
+        daoPackage 'com.example.mytest2023.greendao.dao'
+        //设置DaoMasters、DaoSession、Dao目录
+        targetGenDir 'src/main/java'
+        //修改MyOpenHelper
+    }
+
+    //添加签名文件
+    signingConfigs {
+        debug {
+            storeFile file('D:\\Project\\key.jks')
+            storePassword '11111111'
+            keyAlias 'key'
+            keyPassword '11111111'
+        }
+        release {
+            storeFile file('D:\\Project\\key.jks')
+            storePassword '11111111'
+            keyAlias 'key'
+            keyPassword '11111111'
+        }
+    }
+
+
+    buildTypes {
+        //开发测试
+        debug {
+            minifyEnabled false
+            zipAlignEnabled false
+            shrinkResources false
+            crunchPngs false //关闭crunchPng优化, 以加快构建
+
+            signingConfig signingConfigs.debug   //gradlew assembleRelease
+            // 自定义参数
+        }
+
+        //发布
+        release {
+            minifyEnabled true   //是否打包混淆    proguard-android-optimize.txt
+            zipAlignEnabled true //是否支持Zip Align
+            shrinkResources true //是否去掉不用资源,必须和minifyEnabled 一起使用
+
+            signingConfig signingConfigs.release//当用gradlew assembleRelease 打所有包才有用，若用build的话没用
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+
+            applicationVariants.all { variant ->
+                variant.outputs.all { output ->  // each 改为 all
+                    // 输出apk名称为app_v3.0(45)_pp.apk  productFlavors.name  variant.productFlavors[0].name
+                    def fileName = "MyTest2023_v${defaultConfig.versionName}(${defaultConfig.versionCode})_${productFlavors.name}.apk"
+                    def outFile = output.outputFile
+                    if (outFile != null && outFile.name.endsWith('.apk')) {
+                        outputFileName = fileName  // as3.0将 output.outputFile 改为 outputFileName
+                    }
+                }
+            }
+        }
+    }
+
+    //多友盟渠道打包支持  https://www.jianshu.com/p/533240d222d3
+    flavorDimensions "channel"
+    productFlavors {
+        //根据不同渠道设置不同的
+//        不同环境，不同包名；
+//        不同环境，修改不同的 string.xml 资源文件；
+//        不同环境，修改指定的常量；
+//        不同环境，修改 AndroidManifest.xml 里渠道变量；
+//        不同环境，引用不同的 module。
+        // 不设置，继承defaultConfig中的配置
+        Baidu {//用于百度
+            dimension "channel"// gradle 3.0.0 以上需要有这个
+            applicationId "com.example.mytest2023"// 每个环境包名不同，productFlavors 设置的不同环境包名会覆盖 defaultConfig 里面的设置
+            // 动态添加 string.xml 字段；
+            // 注意，这里是添加，在 string.xml 不能有这个字段，会重名！！！
+            resValue "string", "app_name", "测试2023"
+            // 动态修改 常量 字段  代码里可以用BuildConfig.BUGLY_APPID来引用
+            //buildConfigField 'String', 'BUGLY_APPID', '"8a88449c3d"'
+            // 修改 AndroidManifest.xml 里渠道变量
+            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "Baidu"]
+//            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "Baidu",
+//                                    app_icon   : "@drawable/icon_dev"]
+        }
+
+        qq {//用于qq
+            dimension "channel" // gradle 3.0.0 以上需要有这个
+            applicationId "com.example.mytest2023qq"// 每个环境包名不同
+            // 动态添加 string.xml 字段；
+            // 注意，这里是添加，在 string.xml 不能有这个字段，会重名！！！
+            resValue "string", "app_name", "qq测试2023"
+            // 动态修改 常量 字段
+            //buildConfigField 'String', 'BUGLY_APPID', '"8a88449c3d"'
+            // 修改 AndroidManifest.xml 里渠道变量
+            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "qq"]
+        }
+
+    }
+
+    //将在8.0版本的Android Gradle插件中删除。
+    //使用它没有任何效果，而且AndroidGradle插件会自动优化索引。
+//    dexOptions { //优化dex配置
+//        javaMaxHeapSize "8g"//最大堆内存
+//        jumboMode = true//是否支持大工程模式
+//        preDexLibraries = true//预编译
+//        threadCount = 8//线程数
+//    }
+
+    compileOptions {
+        incremental = true  //开启增量编译
+        sourceCompatibility JavaVersion.VERSION_11
+        targetCompatibility JavaVersion.VERSION_11
+
+//        sourceCompatibility JavaVersion.VERSION_1_8
+//        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+
+    //跳过Lint和Test相关的task, 以加速编译
+    if (isDebug()) {
+        gradle.taskGraph.whenReady {
+            tasks.each { task ->
+                if (task.name.contains("Test") || task.name.contains("Lint")) {
+                    task.enabled = false
+                }
+            }
+        }
+    }
+
+    //如果是构建debug包, 则禁用 "png cruncher" (默认cruncherEnabled=true, 禁用以加速构建)
+    def enableCruncher = { ->
+        return !isDebug()
+    }
+
+    aaptOptions { //禁用cruncher, 以加速编译
+        cruncherEnabled = enableCruncher()
+        cruncherProcesses = 0
+    }
+    ndkVersion '25.2.9519653'
+}
+
+//是否是执行Debug相关task (通用函数, 可供子module调用)
+def isDebug() {
+    def taskNames = gradle.startParameter.taskNames
+    for (tn in taskNames) {
+        if ((tn.contains("install") || tn.contains("assemble")) && tn.contains("Debug")) {
+            return true
+        }
+    }
+    return false
+}
+
+//添加构建依赖项
+dependencies {
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation 'androidx.appcompat:appcompat:1.4.1'
+    implementation 'com.google.android.material:material:1.5.0'
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.3'
+
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    //新的权限请求方法  https://www.jianshu.com/p/a9f28cc81c9c
+    implementation 'com.yanzhenjie:permission:2.0.0-rc4'
+    //腾讯bugly  异常统计  https://bugly.qq.com/docs/user-guide/instruction-manual-android/?v=20180709165613
+    //热修复需要注释
+    implementation 'com.tencent.bugly:crashreport:latest.release'
+    implementation 'com.tencent.bugly:nativecrashreport:latest.release'
+    //分包
+    implementation 'com.android.support:multidex:1.0.3'
+    //eventbus https://github.com/greenrobot/EventBus 和  https://www.jianshu.com/p/1e8191bc7bc2
+    implementation 'org.greenrobot:eventbus:3.1.1'
+    //数据库greendao https://blog.csdn.net/wzgbgz/article/details/79140056
+    implementation "org.greenrobot:greendao:$greendao_version"
+    //状态栏设置 https://www.jianshu.com/p/3042bf7d72e3
+    implementation 'com.readystatesoftware.systembartint:systembartint:1.0.3'
+    //butterknife https://github.com/JakeWharton/butterknife
+    //butterknife插件用不了，现在用idCreate  https://blog.csdn.net/u013937668/article/details/125682058
+    implementation 'com.jakewharton:butterknife:10.2.3'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:10.2.3'
+    //xrecyclerview  https://github.com/XRecyclerView/XRecyclerView
+    implementation 'com.jcodecraeer:xrecyclerview:1.5.9'
+
+    //    retrofit 请求                     --这两个包已经包含okhttp3和gson
+    implementation 'com.squareup.retrofit2:retrofit:2.4.0'
+    //    gson转换器 和retrofit版本一致       --这两个包已经包含okhttp3和gson
+    implementation 'com.squareup.retrofit2:converter-gson:2.4.0'
+    //    字符串转换器 和retrofit版本一致
+    implementation 'com.squareup.retrofit2:converter-scalars:2.4.0'
+    //    rxjava
+    implementation 'com.squareup.retrofit2:adapter-rxjava2:2.4.0'
+    //仿ios弹出框 https://github.com/Bigkoo/Android-AlertView
+    implementation 'com.bigkoo:alertview:1.0.3'
+    // 打印日志
+    implementation 'com.squareup.okhttp3:logging-interceptor:3.4.1'
+    //RXbiding
+    implementation 'com.jakewharton.rxbinding2:rxbinding:2.0.0'
+    //日期时间选择器 https://github.com/codbking/PickTime
+    implementation 'com.github.codbking:PickTime:v1.0.1'
+    //多种分组列表 https://github.com/donkingliang/GroupedRecyclerViewAdapter
+    implementation 'com.github.donkingliang:GroupedRecyclerViewAdapter:2.4.3'
+    //引导页 https://github.com/bingoogolapple/BGABanner-Android
+    implementation 'cn.bingoogolapple:bga-banner:2.2.4@aar'
+    //底部导航 https://github.com/chaychan/BottomBarLayout
+    implementation 'com.github.chaychan:BottomBarLayout:2.0.2' //建议使用最新版本
+
+
+    //智能刷新 https://github.com/scwang90/SmartRefreshLayout
+    //https://github.com/scwang90/SmartRefreshLayout/blob/master/art/md_property.md
+    implementation 'io.github.scwang90:refresh-layout-kernel:2.0.5'      //核心必须依赖
+    implementation 'io.github.scwang90:refresh-header-material:2.0.5'    //谷歌刷新头
+
+    //解决appbarLayout若干问题
+    implementation 'com.github.yuruiyin:AppbarLayoutBehavior:v1.0.4'
+
+    //glide   https://github.com/bumptech/glide
+    implementation 'com.github.bumptech.glide:glide:4.6.1'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.6.1'
+
+    //android12 适配--启动页 https://blog.csdn.net/Alfred_C/article/details/124572383
+    implementation 'androidx.core:core-splashscreen:1.0.0-beta01'
+
+    //友盟所有功能 https://devs.umeng.com/sdk 有统计、性能监测、消息推送、分享链接、认证
+    //友盟统计  https://developer.umeng.com/docs/119267/detail/118578
+    implementation 'com.umeng.sdk:common:latest.integration'
+    implementation 'com.umeng.sdk:analytics:latest.integration'
+
+
+    //room数据库 https://blog.csdn.net/ScottePerk/article/details/124973559
+    implementation("androidx.room:room-rxjava2:2.4.2") //加上防止room与rxjava2冲突
+    implementation "androidx.room:room-runtime:2.4.2" //2.4.2 与 kotlin1.6.21
+    annotationProcessor "androidx.room:room-compiler:2.4.2"
+
+    implementation "org.reactivestreams:reactive-streams:1.0.2"
+
+    //https://zhuanlan.zhihu.com/p/503238433
+    implementation 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.30'
+    //解决BaseRecyclerViewAdapterHelper下拉问题https://blog.csdn.net/syfyyds12138/article/details/126916393
+    implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0'
+
+
+}

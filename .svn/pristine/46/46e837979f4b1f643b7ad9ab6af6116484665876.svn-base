@@ -1,0 +1,92 @@
+package com.example.mytest2023.module.Home;
+
+import android.content.Intent;
+import android.util.Log;
+
+import com.example.mytest2023.R;
+import com.example.mytest2023.base.BaseFragment;
+import com.example.mytest2023.helper.OnItemRecyclerListener;
+import com.example.mytest2023.helper.RecyclerViewHelper;
+import com.example.mytest2023.model.home.Home1Item;
+import com.example.mytest2023.module.Foundation.Open2Activity1;
+import com.example.mytest2023.module.Foundation.OpenServiceActivity;
+
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import butterknife.BindView;
+
+/**
+ * Created by 钟文祥 on 2023-04-14.
+ * Describer: 首页1 简单RecyclerView+吸顶
+ */
+public class Home1Fragment extends BaseFragment {
+
+
+    @BindView(R.id.rv) RecyclerView rv;
+
+    private Home1Adapter adapter;
+    private List<Home1Item> list;
+
+    public static Home1Fragment newInstance() {
+        Home1Fragment fragment = new Home1Fragment();
+        return fragment;
+    }
+
+    @Override
+    public Object setLayout() {
+        return R.layout.fragment_home1;
+    }
+
+    private void initData() {
+        list = new ArrayList<>();
+        list.add(new Home1Item<String>("Activity", "生命周期与启动模式", null, Open2Activity1.class, "生命周期与启动模式"));
+        list.add(new Home1Item<String>("Service", "服务开启与绑定", null, OpenServiceActivity.class, null));
+    }
+
+    @Override
+    public void initView() {
+        Log.e("Home1Fragment", "initView: ");
+        initData();
+        RecyclerViewHelper.init(getActivity(), rv, new LinearLayoutManager(getActivity()), true);
+        adapter = new Home1Adapter(getActivity(), list, new OnItemRecyclerListener() {
+            @Override
+            public void onClick(int position, Object object) {
+                Intent intent = new Intent(getActivity(), ((Home1Item) object).getCls());
+                Object data = ((Home1Item) object).getData();
+                if (data != null) {
+                    if (data instanceof Serializable) {
+                        intent.putExtra("data", (Serializable) data);
+                    } else if (data instanceof String) {
+                        intent.putExtra("data", (String) data);
+                    } else if (data instanceof Integer) {
+                        intent.putExtra("data", (Integer) data);
+                    } else if (data instanceof Float) {
+                        intent.putExtra("data", (Float) data);
+                    } else if (data instanceof Double) {
+                        intent.putExtra("data", (Double) data);
+                    } else if (data instanceof Boolean) {
+                        intent.putExtra("data", (Boolean) data);
+                    }
+                }
+                getActivity().startActivity(intent);
+            }
+        });
+        rv.setAdapter(adapter);
+    }
+
+    @Override
+    public void onFragmentVisibleChange(boolean isVisible) {
+        Log.e("Home1Fragment", "onFragmentVisibleChange: ");
+    }
+
+    @Override
+    public void onFragmentFirstVisible() {
+        Log.e("Home1Fragment", "onFragmentFirstVisible: ");
+    }
+
+
+}
