@@ -27,16 +27,16 @@ import butterknife.OnClick;
  */
 public abstract class FoundationActivity extends AppCompatActivity {
 
-    @BindView(R.id.txt1) TextView txt1;
-    @BindView(R.id.txt2) TextView txt2;
-    @BindView(R.id.btn1) Button btn1;
-    @BindView(R.id.btn1_2) Button btn1_2;
-    @BindView(R.id.btn2) Button btn2;
-    @BindView(R.id.btn2_2) Button btn2_2;
-    @BindView(R.id.btn3) Button btn3;
-    @BindView(R.id.btn3_2) Button btn3_2;
-    @BindView(R.id.btn4) Button btn4;
-    @BindView(R.id.btn4_2) Button btn4_2;
+    protected @BindView(R.id.txt1) TextView txt1;
+    protected @BindView(R.id.txt2) TextView txt2;
+    protected @BindView(R.id.btn1) Button btn1;
+    protected @BindView(R.id.btn1_2) Button btn1_2;
+    protected @BindView(R.id.btn2) Button btn2;
+    protected @BindView(R.id.btn2_2) Button btn2_2;
+    protected @BindView(R.id.btn3) Button btn3;
+    protected @BindView(R.id.btn3_2) Button btn3_2;
+    protected @BindView(R.id.btn4) Button btn4;
+    protected @BindView(R.id.btn4_2) Button btn4_2;
 
     protected OnItemRecyclerListener listener;
     protected String data;
@@ -99,7 +99,8 @@ public abstract class FoundationActivity extends AppCompatActivity {
     @Override
     public void onConfigurationChanged(@NonNull Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
-        Log.e("shengming", getViewNameStr() + "横竖屏 onConfigurationChanged: " + newConfig.toString());
+        Log.e("shengming",
+                getViewNameStr() + "横竖屏 onConfigurationChanged: " + newConfig.toString());
     }
 
     /**
@@ -131,7 +132,8 @@ public abstract class FoundationActivity extends AppCompatActivity {
 
     public abstract void initView();
 
-    @OnClick({R.id.btn1, R.id.btn1_2, R.id.btn2, R.id.btn2_2, R.id.btn3, R.id.btn3_2, R.id.btn4, R.id.btn4_2})
+    @OnClick({R.id.btn1, R.id.btn1_2, R.id.btn2, R.id.btn2_2, R.id.btn3, R.id.btn3_2, R.id.btn4,
+            R.id.btn4_2})
     public void onBindClick(View view) {
         switch (view.getId()) {
             case R.id.btn1:

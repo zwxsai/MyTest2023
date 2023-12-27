@@ -2,6 +2,7 @@ package com.example.mytest2023.module.Banner;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import kotlinx.coroutines.CoroutineScope;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
@@ -29,7 +30,6 @@ public class BannerActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_banner);
         ButterKnife.bind(this);
-
         initBanner();
     }
 

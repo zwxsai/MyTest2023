@@ -102,10 +102,12 @@
         <activity
             android:name=".module.Foundation.AutoViewPagerActivity"
             android:exported="false" />
+        <activity
+            android:name=".module.Coroutine.CoroutineActivity"
+            android:exported="false" />
 
         <service android:name=".module.Foundation.FoundationService1" />
         <service android:name=".module.Foundation.FoundationService2" /> <!-- 静态注册 -->
-
         <service
             android:name=".service.MyTestService"
             android:exported="true">
@@ -113,6 +115,7 @@
                 <action android:name="MyTestService.action" />
             </intent-filter>
         </service>
+
         <receiver
             android:name=".module.Foundation.MyReceiver"
             android:enabled="true"

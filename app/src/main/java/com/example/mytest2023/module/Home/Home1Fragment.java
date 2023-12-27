@@ -10,6 +10,7 @@ import com.example.mytest2023.helper.OnItemRecyclerListener;
 import com.example.mytest2023.helper.RecyclerViewHelper;
 import com.example.mytest2023.model.home.Home1Item;
 import com.example.mytest2023.module.Banner.BannerActivity;
+import com.example.mytest2023.module.Coroutine.CoroutineActivity;
 import com.example.mytest2023.module.Foundation.AutoViewPagerActivity;
 import com.example.mytest2023.module.Foundation.BroadcastReceiverActivity;
 import com.example.mytest2023.module.Foundation.CusViewActivity;
@@ -89,7 +90,9 @@ public class Home1Fragment extends BaseFragment {
         list.add(new Home1Item<String>("Banner轮播", "Banner轮播", null, BannerActivity.class, null));
         list.add(new Home1Item<String>("自定义轮播图", "自定义轮播图", null, AutoViewPagerActivity.class,
                 null));
-        list.add(new Home1Item<String>("kotlin", "学习kotlin", null, KotlinActivity.class, null));
+        list.add(new Home1Item<String>("kotlin3", "学习kotlin", null, KotlinActivity.class, null));
+        list.add(new Home1Item<String>("coroutine", "协程", null, CoroutineActivity.class,
+                "协程的使用"));
         return list;
     }
 
