@@ -110,7 +110,10 @@
         <service android:name=".module.Foundation.FoundationService2" /> <!-- 静态注册 -->
         <service
             android:name=".service.MyTestService"
-            android:exported="true">
+            android:exported="true"
+            android:process=":remote">
+            <!--当设置为android:process=”:remote”时，代表Service在单独的进程中运行
+            名称为：App-packageName:remote-->
             <intent-filter>
                 <action android:name="MyTestService.action" />
             </intent-filter>

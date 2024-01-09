@@ -90,7 +90,7 @@ public class Home1Fragment extends BaseFragment {
         list.add(new Home1Item<String>("Banner轮播", "Banner轮播", null, BannerActivity.class, null));
         list.add(new Home1Item<String>("自定义轮播图", "自定义轮播图", null, AutoViewPagerActivity.class,
                 null));
-        list.add(new Home1Item<String>("kotlin3", "学习kotlin", null, KotlinActivity.class, null));
+        list.add(new Home1Item<String>("kotlin2", "学习kotlin", null, KotlinActivity.class, null));
         list.add(new Home1Item<String>("coroutine", "协程", null, CoroutineActivity.class,
                 "协程的使用"));
         return list;

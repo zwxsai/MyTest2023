@@ -74,6 +74,7 @@ android {
         main {
             //让AS识别libs下的.so第三方包
             jniLibs.srcDirs = ['libs']
+            res.srcDirs = ['src/main/res']
         }
     }
 

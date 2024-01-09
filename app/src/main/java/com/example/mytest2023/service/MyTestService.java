@@ -1,13 +1,9 @@
 package com.example.mytest2023.service;
 
 import android.app.Service;
-import android.content.ComponentName;
-import android.content.Context;
 import android.content.Intent;
-import android.content.ServiceConnection;
 import android.os.IBinder;
 import android.os.RemoteException;
-import android.util.Log;
 
 import com.example.mytest2023.module.kl.IRemoteService;
 
@@ -23,16 +19,20 @@ import androidx.annotation.Nullable;
  * .142^v96^pc_search_result_base8&utm_term=aidl&spm=1018.2226.3001.4187
  * https://blog.csdn.net/jdfkldjlkjdl/article/details/115012307
  * https://www.jianshu.com/p/1140b90d8807
+ *
+ * 服务与Messenger
+ * https://blog.csdn.net/javazejian/article/details/52709857
  */
 public class MyTestService extends Service {
 
     @Nullable
     @Override
     public IBinder onBind(Intent intent) {
-        return new MyAidlService();
-    }
+        return new MyAidlBinder();
+    } //返回一个Binder
 
-    private class MyAidlService extends IRemoteService.Stub {
+    //aidl 在Binder里提供方法
+    private class MyAidlBinder extends IRemoteService.Stub { //Binder里面实现接口提供方法
 
         @Override
         public String getName1(String name) throws RemoteException {

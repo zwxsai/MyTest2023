@@ -16,6 +16,10 @@ import java.util.Date;
 public class TimeHelper {
     public static final String dateFormat = "yyyyMMddHHmmssSSS";
 
+    public static String currentTime() {
+        return currentTime("yyyy/MM/dd/ HH:mm:ss:SSS", false);
+    }
+
     /** 当前时间 */
     public static String currentTime(String dateFormat, boolean regular) {
         return data2Time(dateFormat, new Date(), regular);

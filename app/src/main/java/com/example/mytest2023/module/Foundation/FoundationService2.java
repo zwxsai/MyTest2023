@@ -36,6 +36,13 @@ public class FoundationService2 extends Service {
         Log.e("shengming",
                 TAG + "onStartCommand: data：" + data + ",flags:" + flags + ",startId:" + startId + ",res:" + res);
         return START_STICKY;
+
+        //因内存资源不足而杀死Service
+        //这种情况比较容易处理，可将onStartCommand() 方法的返回值设为
+        // START_STICKY或START_REDELIVER_INTENT
+        // ，该值表示服务在内存资源紧张时被杀死后，在内存资源足够时再恢复。
+        // 也可将Service设置为前台服务，这样就有比较高的优先级，在内存资源紧张时也不会被杀掉。
+
     }
 
 
