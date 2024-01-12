@@ -1,11 +1,9 @@
 package com.example.mytest2023.module.Coroutine
 
 import android.util.Log
-import androidx.lifecycle.lifecycleScope
 import com.example.mytest2023.helper.TimeHelper
 import com.example.mytest2023.module.Foundation.FoundationActivity
 import kotlinx.coroutines.*
-import kotlinx.coroutines.GlobalScope.coroutineContext
 
 /**
  *Created by 钟文祥 on 2023/12/27.
@@ -20,20 +18,22 @@ class CoroutineActivity : FoundationActivity() {
 		txt1.text = "协程2"
 		txt2.text = data
 
-		test0()
-		//两者各开了一条线程
-		test1()
-		test2()
-		test3()
-		test4()
-		test5()
-		test6()
+//		test0()
+//		//两者各开了一条线程
+//		test1()
+//		test2()
+//		test3()
+//		test4()
+//		test5()
+//		test6()
+//		coroutineStartOne()
+		coroutineStartATOMIC()
 	}
 
 	private fun test0() {
-		runBlocking {
+		runBlocking {//开启一个协程，（阻塞线程 ，等执行完才往下执行）
 			coroutineScope {
-				Log.e(TAG, "test0 开始: " + TimeHelper.currentTime()) //第49秒
+				Log.e(TAG, "test0 开始0: " + TimeHelper.currentTime()) //第49秒
 				launch {  //协程开启，没返回值
 					delay(2000)
 					Log.e(TAG, "test0 结束1: " + TimeHelper.currentTime())//第51秒
@@ -41,12 +41,13 @@ class CoroutineActivity : FoundationActivity() {
 				Log.e(TAG, "test0 结束2: " + TimeHelper.currentTime())//第49秒
 			}
 		}
+		Log.e(TAG, "test0 开始1: " + TimeHelper.currentTime()) //第51秒
 	}
 
 	fun test1() {
-		GlobalScope.launch {
+		GlobalScope.launch { //开启一个协程，（不阻塞线程，可往下执行）
 			Log.e(TAG, "test1开始: " + TimeHelper.currentTime()) //第46秒
-			val arg1 = sunpendF1()     //第49秒  suspend立即挂起，等完成再恢复 执行下面的
+			val arg1 = sunpendF1()     //第49秒  （suspend立即挂起，不阻塞线程，等完成再恢复 执行下面的）
 			var arg2 = sunpendF2()     //第53秒
 			Log.e(
 				TAG,
@@ -102,13 +103,13 @@ class CoroutineActivity : FoundationActivity() {
 	private fun test3() {
 		MainScope().launch {
 			Log.e(TAG, "test3开始 :" + TimeHelper.currentTime()) //第46秒
-			var async = async {
+			var async = async { //async 不阻塞不挂起
 				delay(2000)
 				"AA"
 			}
 			val de = 45
 			Log.e(TAG, "test3结束1 :${de}:" + TimeHelper.currentTime()) //第46秒
-			val date = async.await() //开启新的协程 并挂起，不往下执行，等到返回后，再往下执行 async需要与await结合使用
+			val date = async.await() //挂起，不往下执行，等到返回后，再往下执行 async需要与await结合使用
 			Log.e(TAG, "test3结束2 :${date}:" + TimeHelper.currentTime()) //第48秒
 
 		}
@@ -151,7 +152,7 @@ class CoroutineActivity : FoundationActivity() {
 			}
 			Log.e(TAG, "test4结束1: ${TimeHelper.currentTime()} ") //第46秒
 			// 代码执行到此处时  5个请求已经同时开始执行了
-			// await等待各job执行完 将结果合并，挂起等待完成再恢复下面
+			// await等待各job执行完 将结果合并，挂起等待完成再恢复下面，挂起
 			Log.e(
 				TAG,
 				"test4结束2: ${TimeHelper.currentTime()}  ${job1.await()} ${job2.await()} ${job3.await()} ${job4.await()} ${job5.await()}"
@@ -181,24 +182,24 @@ class CoroutineActivity : FoundationActivity() {
 	}
 
 	private fun test6() {
-		CoroutineScope(Dispatchers.IO).launch {
-			Log.e(TAG, "test6: 开始：${TimeHelper.currentTime()}")
-			val job1 = async {
+		CoroutineScope(Dispatchers.IO).launch {//开启协程，不阻塞，不挂起
+			Log.e(TAG, "test6: 开始：${TimeHelper.currentTime()}") //40秒
+			val job1 = async { //子协程，不阻塞，不挂起
 				delay(4000)
-				Log.e(TAG, "test6: 第一个：${TimeHelper.currentTime()}")
+				Log.e(TAG, "test6: 第一个：${TimeHelper.currentTime()}")//44秒
 				3
 			}
-			val job2 = async {
+			val job2 = async {//子协程，不阻塞，不挂起
 				delay(2000)
-				Log.e(TAG, "test6: 第二个：${TimeHelper.currentTime()}")
+				Log.e(TAG, "test6: 第二个：${TimeHelper.currentTime()}") //42秒
 				4
 			} //job1,job2 并行
-			val num1 = job1.await() //挂起，注意不要写在上面，否则是变为串行了
-			Log.e(TAG, "test6: 结束1：${TimeHelper.currentTime()}")
+			val num1 = job1.await() //挂起，注意不要写在上面，否则是变为串行了 ，阻塞，执行完再往下执行
+			Log.e(TAG, "test6: 结束1：${TimeHelper.currentTime()}") //44秒
 			val num2 = job2.await() //挂起
-			Log.e(TAG, "test6: 结束2：${TimeHelper.currentTime()}")
+			Log.e(TAG, "test6: 结束2：${TimeHelper.currentTime()}")//44秒
 			val sdf = withContext(Dispatchers.Main) {
-				Log.e(TAG, "test6: 第三个：${num1 + num2} ${TimeHelper.currentTime()}")
+				Log.e(TAG, "test6: 第三个：${num1 + num2} ${TimeHelper.currentTime()}") //44秒
 				"fg"
 			}
 
@@ -206,7 +207,7 @@ class CoroutineActivity : FoundationActivity() {
 
 
 			//协程的调度器 (3个)
-			// Dispatchers.Main  主线程   CoroutineScope(Dispatchers.IO)
+			// Dispatchers.Main  主线程   CoroutineScope(Dispatchers.Main)
 			//主要是处理：UI的更新操作，调用suspend挂起函数
 			// Dispatchers.Default  默认 非主线程
 			//主要是处理：CPU密集型操作(数据解析，数据计算等)
@@ -215,11 +216,73 @@ class CoroutineActivity : FoundationActivity() {
 
 //			协程的启动模式(CoroutineStart)  launch(CoroutineStart.DEFAULT){}
 //			CoroutineStart.DEFAULT 创建协程后，立即开始调度。在调度之前如果协程被取消，那么它就不会执行，而是以抛出异常来结束
-//			CoroutineStart.ATOMIC
-//			CoroutineStart.LAZY
+//			CoroutineStart.ATOMIC 创建协程后，立即开始调度。 在执行到第一个挂起函数前 不会取消
+//			CoroutineStart.LAZY 创建协程后，不立即开始调度。只有协程被需要时，包括主动调用协程的start()/join()/await()等函数时，才开始。
+//			在调度之前如果协程被取消，那么它就不会执行，而是以抛出异常来结束
 //			CoroutineStart.UNDISPATCHED
-
+//			协程创建后，立即在当前函数调用栈执行(在哪个线程创建，在哪个线程执行)。
+//			在哪个函数创建，就在哪个线程执行，从名字可以看出，它不接受Dispatchers指定线程的调度
+//			在执行到第一个挂起函数前 不会取消
 		}
+	}
+
+
+	fun coroutineStartDEFAULT() {
+		runBlocking {
+			//启动协程
+			val job = launch(start = CoroutineStart.DEFAULT) {
+				Log.d("liu", "default  start")
+				delay(3000)
+				Log.d("liu", "default  end")
+			}
+			delay(1000)
+			//取消
+			job.cancel()
+		}
+	}
+
+	fun coroutineStartATOMIC() {
+		runBlocking {
+			//启动协程
+			val job = launch(start = CoroutineStart.ATOMIC) {
+				Log.d("liu", "default  start")
+				delay(3000)
+				Log.d("liu", "default  end")
+			}
+			//取消
+			job.cancel()
+		}
+	}
+
+	fun coroutineStartLAZY() {
+		runBlocking {
+			val job = launch(start = CoroutineStart.LAZY) {
+				Log.d("liu", "LAZY  start")
+			}
+			Log.d("liu", "开始一些计算")
+			delay(3000)
+			Log.d("liu", "耗时操作完成")
+			job.start()
+		}
+
+		//打印结果
+//		开始一些计算
+//		耗时操作完成
+//		LAZY  start
+	}
+
+	fun coroutineStartUNDISPATCHED() {
+		runBlocking {
+			val job = async(context = Dispatchers.IO, start = CoroutineStart.UNDISPATCHED) {
+				Log.d("liu", "线程IO:${Thread.currentThread().name}")
+			}
+			val job1 = async(context = Dispatchers.IO, start = CoroutineStart.DEFAULT) {
+				Log.d("liu", "线程:${Thread.currentThread().name}")
+			}
+		}
+		//打印结果
+//		线程IO:main
+//		线程:DefaultDispatcher-worker-1
 	}
 
 }
