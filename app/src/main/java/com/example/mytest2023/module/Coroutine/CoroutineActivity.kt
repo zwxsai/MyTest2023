@@ -18,7 +18,7 @@ class CoroutineActivity : FoundationActivity() {
 		txt1.text = "协程2"
 		txt2.text = data
 
-//		test0()
+		test0()
 //		//两者各开了一条线程
 //		test1()
 //		test2()
@@ -27,12 +27,16 @@ class CoroutineActivity : FoundationActivity() {
 //		test5()
 //		test6()
 //		coroutineStartOne()
-		coroutineStartATOMIC()
+//		coroutineStartATOMIC()
+//		CoroutineScope(Dispatchers.IO).launch {
+//			testCoroutineContext2()
+//		}
+//		coroutineScopeCancel()
 	}
 
 	private fun test0() {
-		runBlocking {//开启一个协程，（阻塞线程 ，等执行完才往下执行）
-			coroutineScope {
+		runBlocking {//开启一个协程，（阻塞线程 ，等执行完才往下执行） 常规函数
+			coroutineScope { //挂起函数
 				Log.e(TAG, "test0 开始0: " + TimeHelper.currentTime()) //第49秒
 				launch {  //协程开启，没返回值
 					delay(2000)
@@ -167,12 +171,12 @@ class CoroutineActivity : FoundationActivity() {
 
 	private fun test5() { //join() 可以按顺序执行，123，不然的话312
 		CoroutineScope(Dispatchers.IO).launch {
-			val job1 = CoroutineScope(Dispatchers.IO).launch {
+			val job1 = launch(start = CoroutineStart.LAZY) {
 				delay(1000)
 				Log.e(TAG, "test5----第 1 个任务")
 			}
 			job1.join() //挂起函数
-			val job2 = CoroutineScope(Dispatchers.IO).launch {
+			val job2 = launch {
 				delay(2000)
 				Log.e(TAG, "test5----第 2 个任务")
 			}
@@ -223,6 +227,10 @@ class CoroutineActivity : FoundationActivity() {
 //			协程创建后，立即在当前函数调用栈执行(在哪个线程创建，在哪个线程执行)。
 //			在哪个函数创建，就在哪个线程执行，从名字可以看出，它不接受Dispatchers指定线程的调度
 //			在执行到第一个挂起函数前 不会取消
+
+//			1，DEFAULT，ATOMIC创建后，会立即调度（并不是立即执行）；LAZY是只有触发了，才会执行；UNDISPATCHED会立即执行
+//			2，UNDISPATCHED执行的线程是创建它的函数所在线程，哪怕指定线程，也无效
+//			3，DEFAULT取消时，会被立即取消
 		}
 	}
 
@@ -284,5 +292,103 @@ class CoroutineActivity : FoundationActivity() {
 //		线程IO:main
 //		线程:DefaultDispatcher-worker-1
 	}
+
+	private suspend fun teeee() {
+		CoroutineScope(Dispatchers.IO).async(
+			context = Dispatchers.IO, start = CoroutineStart.DEFAULT
+		) {
+			launch {
+
+			}
+		}
+		//作用域
+		runBlocking { //常规函数 阻塞线程
+			coroutineScope {
+				launch {
+
+				}
+			}
+			launch { }
+		}
+
+		coroutineScope {//挂起函数 不阻塞线程 需要suspend ，内部一个协程失败了，其它的协程也会被取消
+
+		}
+		supervisorScope {//挂起函数 不阻塞线程 需要suspend ，内部一个协程失败了，不影响其它协程
+
+		}
+	}
+
+	fun coroutineScopeCancel() {
+		//等待子协程执行完
+		runBlocking<Unit> {
+			//CoroutineScope不会继承runBlocking的属性。需要delay或者join
+			val scope = CoroutineScope(Dispatchers.Default)
+			val job1 = scope.launch {
+				delay(1000)
+				Log.d("liu", "启动 job 1")
+			}
+			val job2 = scope.launch {
+				delay(1000)
+				Log.d("liu", "启动 job 2")
+			}
+
+//			delay(200)
+			delay(2000)
+//			scope.cancel() //一个协程作用域 取消
+			job1.cancel()
+			job2.cancel()
+		}
+	}
+
+
+	private suspend fun testCoroutineContext2() {
+
+		val exceptionHandler = CoroutineExceptionHandler { _, exception ->
+			Log.d("liu", "exception: $exception")
+		}
+		Log.d("liu", "1 Top Job exceptionHandler: $exceptionHandler")
+		//创建Job
+		val topJob = Job()
+		//创建一个新的协程作用域
+		val scope =
+			CoroutineScope(topJob + Dispatchers.Default + CoroutineName("coroutine new Name") + exceptionHandler)
+		//打印顶层Job
+		Log.d("liu", "2 Top Job Info: $topJob")
+		val job = scope.launch() {
+			//打印协程相关信息
+			Log.d(
+				"liu",
+				"3 Job Info: ${coroutineContext[Job]}  ${coroutineContext[CoroutineName]}" +
+						" ${coroutineContext[CoroutineExceptionHandler]} " +
+						", Thread info: ${Thread.currentThread().name}"
+			)
+			val job2 = async {
+				Log.d(
+					"liu",
+					"4 Job Info: ${coroutineContext[Job]} ${coroutineContext[CoroutineName]}" +
+							" ${coroutineContext[CoroutineExceptionHandler]} " +
+							", Thread info: ${Thread.currentThread().name}"
+				)
+			}
+			job2.await()
+		}
+		job.join()
+	}
+
+////打印结果
+////异常Handler
+//	Top Job exceptionHandler: cn.edu.coroutine.CoroutineTestActivity$testCoroutineContext2$$inlined$CoroutineExceptionHandler$1@6c29d69
+//
+////Job名字
+//	Top Job Info: JobImpl{Active}@50933ee
+//
+////launch打印 job  协程名字  exceptionHandler  线程信息
+//	Job Info: StandaloneCoroutine{Active}@ad1d08f  CoroutineName(coroutine new Name) cn.edu.coroutine.CoroutineTestActivity$testCoroutineContext2$$inlined$CoroutineExceptionHandler$1@6c29d69 , Thread info: DefaultDispatcher-worker-2
+//
+////launch打印 job  协程名字  exceptionHandler  线程信息
+//	Job Info: DeferredCoroutine{Active}@67b8f1c CoroutineName(coroutine new Name) cn.edu.coroutine.CoroutineTestActivity$testCoroutineContext2$$inlined$CoroutineExceptionHandler$1@6c29d69 , Thread info: DefaultDispatcher-worker-1
+
+//	通过launch 或 async启动的协程，系统始终会向新协程分配 Job 的新实例。所以，Job是不会传递到子协程的，但是，其它的属性，都可以被继承下来
 
 }

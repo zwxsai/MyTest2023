@@ -15,6 +15,7 @@ class PlayerZi : PlayerFu(30) { //类和方法需要加open
 
 	fun dodo2() {
 		var index = ENUMClass.AA
+		val df = ENUMClass.BB.value
 	}
 
 	override fun toString(): String {

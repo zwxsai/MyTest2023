@@ -7,9 +7,7 @@ import android.util.Log
  *Describer:
  */
 open class PlayerFu( //类默认都是不能被继承的，加上open就能被继承
-	_id: Int,
-	_name: String,
-	var age: Int = 32
+	_id: Int, _name: String, var age: Int = 32
 ) {
 	//operator 运算符 可以对对象用 +号了
 	operator fun component1() = age + 45
@@ -21,7 +19,7 @@ open class PlayerFu( //类默认都是不能被继承的，加上open就能被�
 //		}
 		set(value) {
 			var str: String = "ABC"
-			field = str.length + value
+			field = str.length + value //field就是本身
 		}
 
 	var name = _name
@@ -68,6 +66,9 @@ open class PlayerFu( //类默认都是不能被继承的，加上open就能被�
 	val config by lazy { test1() } //懒惰加载 几秒后才会执行
 	fun test1(): String {
 		Log.e("kotlin", "test1: loading")
+		if (age == 3) {
+
+		}
 		return "ABC"
 	}
 }
@@ -75,5 +76,5 @@ open class PlayerFu( //类默认都是不能被继承的，加上open就能被�
 //调用顺序
 //1、主构造函数的参数声明
 //2、类级别的参数赋值
-//3、init()方法的赋值和函数调用  ，注init()方法需要写在后面
+//3、init()方法的赋值和函数调用  ，注init()方法需要写在参数后面
 //4、次构造函数的赋值和函数调用

@@ -72,7 +72,8 @@ class KotlinActivity : AppCompatActivity() {
 		val view: TextView = findViewById<TextView>(this)
 		view.setOnClickListener(View.OnClickListener {
 			ToastUtil.showMsg(context, "AA")
-			action(view)
+//			action(view)
+			action.invoke(view)
 		})
 	}
 
@@ -82,6 +83,8 @@ class KotlinActivity : AppCompatActivity() {
 		view.setOnClickListener(View.OnClickListener {
 			ToastUtil.showMsg(context, "AA")
 			action(view, true)
+//			action.invoke(view, true)
+
 		})
 	}
 

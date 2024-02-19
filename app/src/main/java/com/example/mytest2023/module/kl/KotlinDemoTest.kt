@@ -40,7 +40,7 @@ class KotlinDemoTest() {
 		strNull = null
 		strNull?.capitalize() //安全调用符，加上？. 非空执行，为空不执行
 		//变为三目运算了 
-		strNull?.let {
+		val df = strNull?.let {
 			if (it.isNotBlank()) { //不为空时 ，执行capitalize
 				it.capitalize()
 			} else { //为空时，默认赋值
@@ -57,10 +57,8 @@ class KotlinDemoTest() {
 			strNull = strNull ?: "dddd";
 
 			//等价于
-			if (strNull == null)
-				strNull = "4gfdg"
-			else
-				strNull
+			if (strNull == null) strNull = "4gfdg"
+			else strNull
 		} catch (e: Exception) {
 			e.printStackTrace()
 		}
@@ -74,6 +72,7 @@ class KotlinDemoTest() {
 
 		//结构语法
 		var (a1, a2, a3) = "AA".split(",")
+		val sdt = a2
 		var a11 = "AA".split(",")
 		"AA".replace(Regex("ABCD")) {
 			when (it.value) {
@@ -209,12 +208,13 @@ class KotlinDemoTest() {
 		map3[4] = "5"
 		var sd = map[4]
 
-
-		map2.iterator()
-			.forEach { mutableEntry: MutableMap.MutableEntry<Int, String> ->
-				val fgf = "${mutableEntry.key}" + mutableEntry.value
-				val sdf = mutableEntry.key.toString() + mutableEntry.value
-			}
+		map2.forEach {
+			it.key + it.value.toInt()
+		}
+		map2.iterator().forEach { mutableEntry: MutableMap.MutableEntry<Int, String> ->
+			val fgf = "${mutableEntry.key}" + mutableEntry.value
+			val sdf = mutableEntry.key.toString() + mutableEntry.value
+		}
 
 		var strtest = test1(2, "2")
 		MyClass1().test1() //new出来 点
@@ -317,7 +317,11 @@ class KotlinDemoTest() {
 	fun test11(list1: MutableList<String>, action: (index: Int, value: String) -> Int) {
 		for ((index1, item) in list1.withIndex()) {
 			val wer: Int = action(index1, list1[index1])
+			val wer2: Int = action(index1, item)
 			val sd = 5 * wer
+		}
+		list1.forEachIndexed { index, s ->
+
 		}
 	}
 
@@ -388,12 +392,30 @@ class KotlinDemoTest() {
 		return a.toString()
 	}
 
+	fun test14() {
+		var str1: String? = null
+		val str2 = str1?.let {
+			val sd4 = 3
+			"4t"
+		}
+		val str3 = str1.run {
+			toString()
+			4
+		}
+		val str4 = str1.apply {  //初始化
+			4
+		}
+		val str5 = str1.also { //更新
+			5
+		}
+	}
+
 	//let 函数适合对一个对象进行一系列处理，并返回处理结果的场景,返回值表达式的执行结果作为返回值，it为对象，要用it点出来方法
 	//run 函数适合对一个对象进行一系列处理，并返回处理结果的场景,返回值表达式的执行结果作为返回值，this类似java的this，可以直接用this本身的方法
 	//with 等价于run 返回最后一行和return
-	//apply 返回对象本身  用于初始化
+	//apply 返回对象本身 this  用于初始化
 	//also 等价于apply  返回对象本身 用于执行对象操作 可以链式调用
-	//takeif函数 判断是否为true，不为空返回对象本身  为空返回null 之后？.
+	//takeif函数 判断是否为true，不为空返回对象本身  为空返回null
 	//takeunless 与takeif相反
 
 
