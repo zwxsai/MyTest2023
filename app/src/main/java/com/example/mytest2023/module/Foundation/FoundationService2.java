@@ -46,14 +46,14 @@ public class FoundationService2 extends Service {
     }
 
 
-    private SumBind bind = new SumBind();
+    private SumBind bind2 = new SumBind();
 
     // bindService() 才用到onBind
     @Nullable
     @Override
     public IBinder onBind(Intent intent) {
         Log.e("shengming", TAG + "onBind: ");
-        return bind;
+        return bind2;
     }
 
     // unbindService() onUnbind

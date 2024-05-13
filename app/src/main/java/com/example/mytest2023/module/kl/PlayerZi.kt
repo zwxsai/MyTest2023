@@ -20,7 +20,7 @@ class PlayerZi : PlayerFu(30) { //类和方法需要加open
 
 	override fun toString(): String {
 
-		return "PlayerZi(i=$i)"
+		return "PlayerZi(i=${i})"
 	}
 
 

@@ -4,6 +4,7 @@ plugins {//应用插件,此处就不会有插件版本
     id 'kotlin-android'
     id 'org.greenrobot.greendao'
     id 'com.jakewharton.butterknife'
+    id 'kotlin-parcelize'
 
 }
 

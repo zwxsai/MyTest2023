@@ -7,7 +7,7 @@ import android.util.Log
  *Describer:
  */
 open class PlayerFu( //类默认都是不能被继承的，加上open就能被继承
-	_id: Int, _name: String, var age: Int = 32
+	 _id: Int, _name: String, var age: Int = 32
 ) {
 	//operator 运算符 可以对对象用 +号了
 	operator fun component1() = age + 45
@@ -42,6 +42,8 @@ open class PlayerFu( //类默认都是不能被继承的，加上open就能被�
 	constructor(id2: Int) : this(id2, _name = "zhong") {
 		this.id = id2 + 10
 	}
+
+
 
 //	override fun toString(): String {
 //		return "Player2(id=$id, name='$name',age=$age, )"

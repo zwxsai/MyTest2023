@@ -1,21 +1,19 @@
 package com.example.mytest2023.module.kl
 
-import android.app.Activity
 import android.content.Context
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 import com.example.mytest2023.R
 import com.example.mytest2023.helper.ToastUtil
-import kotlin.time.seconds
 
 //函数当参数
 class KotlinActivity : AppCompatActivity() {
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
 		setContentView(R.layout.activity_kotlin)
-		R.id.txt1.OnClick(this, action = { //只有一个参数的时候 自带一个it 代表参数
+		R.id.txt1.OnClick(this, action1 = { //只有一个参数的时候 自带一个it 代表参数
 			it.setText("AAA")
 		})
 		R.id.txt1.OnClick(this, {
@@ -68,12 +66,12 @@ class KotlinActivity : AppCompatActivity() {
 	}
 
 	//添加int的其他方法
-	fun Int.OnClick(context: Context, action: (txt: TextView) -> Unit) {
-		val view: TextView = findViewById<TextView>(this)
+	fun Int.OnClick(context: Context, action1: (txt: TextView) -> Unit) {
+		val view: TextView = findViewById<TextView>(this) //this代表int
 		view.setOnClickListener(View.OnClickListener {
 			ToastUtil.showMsg(context, "AA")
 //			action(view)
-			action.invoke(view)
+			action1.invoke(view)
 		})
 	}
 
@@ -82,7 +80,7 @@ class KotlinActivity : AppCompatActivity() {
 		val view: TextView = findViewById<TextView>(this)
 		view.setOnClickListener(View.OnClickListener {
 			ToastUtil.showMsg(context, "AA")
-			action(view, true)
+			val gd = action(view, true)
 //			action.invoke(view, true)
 
 		})
@@ -93,6 +91,11 @@ class KotlinActivity : AppCompatActivity() {
 		view.setOnClickListener(View.OnClickListener {
 			ToastUtil.showMsg(context, "AA")
 			action()
+		})
+		view.setOnClickListener(object : View.OnClickListener {
+			override fun onClick(v: View?) {
+				action.invoke()
+			}
 		})
 	}
 

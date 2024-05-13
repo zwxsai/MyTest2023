@@ -69,6 +69,8 @@ class KotlinDemoTest() {
 		var list2 = arrayListOf<String>();
 		list.add("dd")
 		list2.add("4")
+		list[0] = ""
+		list2[0] = ""
 
 		//结构语法
 		var (a1, a2, a3) = "AA".split(",")
@@ -155,6 +157,9 @@ class KotlinDemoTest() {
 
 		}
 
+		var list111 = arrayListOf(1, 1)
+		var list222 = mutableListOf<Int>(1, 2)
+
 
 		val arr1 = arrayOf("aaa")
 		for (index in arr1.indices) {
@@ -201,6 +206,9 @@ class KotlinDemoTest() {
 		map2.remove(0)
 		var size = map2.size
 		size = list1.size
+
+		val map32 = mutableMapOf<String, String>()
+		map32.remove("5")
 
 		var map3 = HashMap<Int, String>()
 		map3.put(4, "5")
@@ -252,6 +260,7 @@ class KotlinDemoTest() {
 		test9(54, "aa", "bb")
 		//可以加一个数组 前面用 *号
 		val arrel = arrayOf("cc", "dd")
+		val list333 = mutableListOf<String>("aa", "bb")
 		test9(64, "aa", "bb", *arrel)
 
 		test10("aa", "bb", *arrel, a1 = 43)

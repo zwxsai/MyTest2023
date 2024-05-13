@@ -5,7 +5,7 @@ package com.example.mytest2023.module.kl
  *Describer:
  */
 class FanXing2<T>(
-	vararg _items: T
+	vararg _items: T //可变参数
 ) {
 	private var items: Array<out T> = _items
 	private var items2 = _items

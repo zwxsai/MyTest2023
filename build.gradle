@@ -3,13 +3,13 @@ buildscript { //构建脚本
     ext.kotlin_version = '1.6.21'
     ext.greendao_version = '3.3.0'
 
-    //构建过程依赖的仓库
+    //存储库  构建过程依赖的仓库
     repositories {
         google()
-        jcenter()
-        mavenCentral()//代码托管仓库
+        jcenter()  //AS的默认代码仓库// https://blog.csdn.net/xichenguan/article/details/79255255
+        mavenCentral()//逐渐被淘汰 代码托管仓库
     }
-    dependencies { //依靠
+    dependencies { // 依赖项
         //Gradle 插件及使用版本
         classpath 'com.android.tools.build:gradle:7.0.4'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
@@ -23,7 +23,7 @@ buildscript { //构建脚本
 
 //这里面配置整个项目依赖的仓库,这样每个module就不用配置仓库了
 allprojects {
-    repositories {
+    repositories { //存储库   构建过程依赖的仓库
         //代码托管仓库，可以引用 jcenter() 上任何的开源项目
         google()
         jcenter()
