@@ -15,6 +15,7 @@ import com.example.mytest2023.module.Foundation.AutoViewPagerActivity;
 import com.example.mytest2023.module.Foundation.BroadcastReceiverActivity;
 import com.example.mytest2023.module.Foundation.CusViewActivity;
 import com.example.mytest2023.module.Foundation.DesignActivity;
+import com.example.mytest2023.module.Presentation.PresentationActivity;
 import com.example.mytest2023.module.kl.KotlinActivity;
 import com.example.mytest2023.module.Foundation.Open2Activity;
 import com.example.mytest2023.module.Foundation.ServiceActivity;
@@ -93,6 +94,8 @@ public class Home1Fragment extends BaseFragment {
         list.add(new Home1Item<String>("kotlin2", "学习kotlin", null, KotlinActivity.class, null));
         list.add(new Home1Item<String>("coroutine", "协程", null, CoroutineActivity.class,
                 "协程的使用"));
+        list.add(new Home1Item<String>("Presentation双屏", "双屏", null, PresentationActivity.class,
+                "双屏的使用"));
         return list;
     }
 

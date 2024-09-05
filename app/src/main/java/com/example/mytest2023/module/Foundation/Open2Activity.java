@@ -1,6 +1,7 @@
 package com.example.mytest2023.module.Foundation;
 
 import android.content.Intent;
+import android.widget.Toast;
 
 import com.example.mytest2023.helper.OnItemRecyclerListener;
 
@@ -20,10 +21,13 @@ public class Open2Activity extends FoundationActivity {
         listener = new OnItemRecyclerListener() {
             @Override
             public void onClick(int viewId, Object object) {
-                Intent intent = new Intent(Open2Activity.this, ServiceActivity.class);
-                intent.putExtra("data", "第二页面的内容");
-                startActivity(intent);
+//                Intent intent = new Intent(Open2Activity.this, ServiceActivity.class);
+//                intent.putExtra("data", "第二页面的内容");
+//                startActivity(intent);
+
+                Toast.makeText(Open2Activity.this, "dfg", Toast.LENGTH_SHORT).show();
             }
         };
+
     }
 }

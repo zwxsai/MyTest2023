@@ -1,6 +1,7 @@
 package com.example.mytest2023.module.iqiyi;
 
 import android.content.Context;
+import android.os.Build;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -12,6 +13,7 @@ import com.chad.library.adapter.base.BaseViewHolder;
 import com.example.mytest2023.R;
 import com.example.mytest2023.model.home.Home1Item;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import androidx.annotation.NonNull;
@@ -40,7 +42,24 @@ public class Home1BRVAHAdapter extends BaseQuickAdapter<Home1Item, BaseViewHolde
         // GlideRoundTransform(context));ic_img_loading_fail
 
         for (int i = 0; i < 5; i++) {
+            if (i == 3) {
+                break;
+            }
+        }
 
+        List<Integer> list = new ArrayList<Integer>();
+        list.add(0);
+        list.add(1);
+        list.add(2);
+        list.add(3);
+        list.add(4);
+        list.add(5);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            list.forEach(integer -> {
+                if(integer==3){
+
+                }
+            });
         }
     }
 

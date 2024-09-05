@@ -7,6 +7,9 @@ buildscript { //构建脚本
     repositories {
         google()
         jcenter()  //AS的默认代码仓库// https://blog.csdn.net/xichenguan/article/details/79255255
+        //JCenter仓库只是Bintray官方账户创建的一个maven仓库，地址是https://jcenter.bintray.com
+        //个人的仓库和JCenter是平级的，只不过JCenter被Android Gradle设为了标准仓库
+        //JitPack是一个远程仓库，它允许你把git托管的java或android项目（貌似目前仅支持github），轻松发布到jitpack maven仓库上
         mavenCentral()//逐渐被淘汰 代码托管仓库
     }
     dependencies { // 依赖项
@@ -45,4 +48,8 @@ allprojects {
 // 相当于执行Delete.delete(rootProject.buildDir)
 task clean(type: Delete) {
     delete rootProject.buildDir
+}
+
+ext {
+    leakcanaryVersion='2.11'
 }

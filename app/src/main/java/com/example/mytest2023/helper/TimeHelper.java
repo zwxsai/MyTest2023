@@ -1,6 +1,7 @@
 package com.example.mytest2023.helper;
 
 
+import android.provider.Settings;
 import android.util.Log;
 
 import java.text.DateFormat;
@@ -109,7 +110,10 @@ public class TimeHelper {
         return 0;
     }
 
-    //获取时间前后的时间
+    /***
+     *  获取时间前后的时间
+     * field :Calendar.MINUTE
+     */
     public static String addTime(int field, int expiredIn, String dateFormat) {
         Calendar cal = Calendar.getInstance();
         //这里用的是分钟，也可以用小时，或者是天...

@@ -46,7 +46,8 @@ android {
 
         ndk {
             // 设置支持的SO库架构
-            abiFilters 'armeabi' //, 'x86', 'armeabi-v7a', 'x86_64', 'arm64-v8a'
+            abiFilters 'armeabi', 'armeabi-v7a', 'arm64-v8a'
+            //, 'x86', 'armeabi-v7a', 'x86_64', 'arm64-v8a'
 
             //运行环境，要上传Google Play必须兼容64位，这里仅兼容ARM架构
             //对于ARM架构，32 位库位于armeabi-v7a 中。64 位等效项是arm64-v8a。
@@ -224,6 +225,15 @@ android {
     ndkVersion '25.2.9519653'
 }
 
+task createJar(type: Jar) {
+    from('build/intermediates/javac/debug/')
+    include('com/example/mytest2023/Api/api/JarTest2.class')
+    destinationDir(file('build/jar/'))
+    archiveName('sample.jar')
+}
+
+assemble.dependsOn createJar
+
 //是否是执行Debug相关task (通用函数, 可供子module调用)
 def isDebug() {
     def taskNames = gradle.startParameter.taskNames
@@ -241,7 +251,7 @@ dependencies {
 //    implementation(project(":mylibrary"))
 
     //本地依赖：Gradle在项目app/libs/目录中声明对jar文件的依赖,因为 Gradle读取相对于build.gradle文件的路径
-    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation fileTree(include: ['*.jar', '*.arr'], dir: 'libs')
 
     //远程依赖：如果该库在本地尚不存在，则 Gradle 会在构建需要时,从远程站点拉取它
     implementation 'androidx.appcompat:appcompat:1.4.1'
@@ -337,8 +347,15 @@ dependencies {
     //折叠文本
     implementation 'com.eric.android.view:expandable-textview:1.2.1'
 
+    //分渠道
+    qqImplementation 'com.eric.android.view:expandable-textview:1.2.1'
+
     //leakcanary 内存检测 https://blog.csdn.net/hello_1995/article/details/120075342
-    debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.11'
+    debugImplementation "com.squareup.leakcanary:leakcanary-android:$leakcanaryVersion"
+
+//    implementation project(path: ':unityLibrary')
+//    implementation fileTree(dir: project(':unityLibrary').getprojectDir().tostring() + ('\\libs'), include: ['*.jar', '*.aar'])
+    implementation files('libs/unityLibrary-debug.aar')
 }
 
 //声明是要使用谷歌服务框架（这个一般放在gradle最下面）

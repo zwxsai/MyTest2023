@@ -7,7 +7,7 @@ import android.util.Log
  *Describer:
  */
 open class PlayerFu( //类默认都是不能被继承的，加上open就能被继承
-	 _id: Int, _name: String, var age: Int = 32
+	_id: Int, _name: String, var age: Int = 32
 ) {
 	//operator 运算符 可以对对象用 +号了
 	operator fun component1() = age + 45
@@ -30,7 +30,6 @@ open class PlayerFu( //类默认都是不能被继承的，加上open就能被�
 			name = value + "567"
 		}
 
-	lateinit var work: String  //延时初始化
 
 
 	init {
@@ -42,7 +41,6 @@ open class PlayerFu( //类默认都是不能被继承的，加上open就能被�
 	constructor(id2: Int) : this(id2, _name = "zhong") {
 		this.id = id2 + 10
 	}
-
 
 
 //	override fun toString(): String {
@@ -64,8 +62,9 @@ open class PlayerFu( //类默认都是不能被继承的，加上open就能被�
 		return "AAB"
 	}
 
+	lateinit var work: String  //延时初始化
 
-	val config by lazy { test1() } //懒惰加载 几秒后才会执行
+	val config by lazy { test1() } //懒惰加载 几秒后才会执行   lazy只适用于val对象，对于var对象，需要使用lateinit
 	fun test1(): String {
 		Log.e("kotlin", "test1: loading")
 		if (age == 3) {

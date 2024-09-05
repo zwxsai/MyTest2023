@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+
+        <Button
+            android:id="@+id/btn_shuang_0"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:text="主屏的第0按钮" />
+
+        <Button
+            android:id="@+id/btn_shuang_1"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_marginTop="10dp"
+            android:text="主屏 一号相机" />
+
+        <Button
+            android:id="@+id/btn_shuang_2"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_marginTop="10dp"
+            android:text="主屏 二号相机" />
+
+        <Button
+            android:id="@+id/btn_shuang_3"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_marginTop="10dp"
+            android:text="主屏 单屏" />
+
+        <Button
+            android:id="@+id/btn_shuang_4"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_marginTop="10dp"
+            android:text="主屏 双屏" />
+
+        <Button
+            android:id="@+id/btn_shuang_5"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_marginTop="10dp"
+            android:text="finish" />
+
+        <RelativeLayout
+            android:id="@+id/rl0"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="10dp"
+            android:background="@color/green" />
+
+
+    </LinearLayout>
+</layout>

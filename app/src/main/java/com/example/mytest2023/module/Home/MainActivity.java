@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.animation.Animation;
 import android.view.animation.RotateAnimation;
@@ -162,7 +163,8 @@ public class MainActivity extends BaseActivity {
                 Manifest.permission.INTERNET,
                 Manifest.permission.READ_EXTERNAL_STORAGE,
                 Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                Manifest.permission.ACCESS_NETWORK_STATE);
+                Manifest.permission.ACCESS_NETWORK_STATE,
+                Manifest.permission.SYSTEM_ALERT_WINDOW);
     }
 
     private void testApi() {
@@ -200,4 +202,5 @@ public class MainActivity extends BaseActivity {
         }
         return super.onKeyDown(keyCode, event);
     }
+
 }

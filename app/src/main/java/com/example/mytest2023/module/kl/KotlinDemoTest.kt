@@ -424,7 +424,7 @@ class KotlinDemoTest() {
 	//with 等价于run 返回最后一行和return
 	//apply 返回对象本身 this  用于初始化
 	//also 等价于apply  返回对象本身 用于执行对象操作 可以链式调用
-	//takeif函数 判断是否为true，不为空返回对象本身  为空返回null
+	//takeif函数 判断{}最后一行为true，返回自身it，为false，返回null
 	//takeunless 与takeif相反
 
 
@@ -488,21 +488,39 @@ class KotlinDemoTest() {
 			var str: String = actionStr()
 			actionStr2(4, "fg")
 		}
-		val age = 4;
+		val age = 14;
 		if (age in (0..3)) {  // in 闭区间
 
-		} else if (age in (3..6)) {
+		} else if (age in 4 until 6) {
 			TODO("5g")
 		}
 
+		if (age in 0..10) {
 
+		}
+		if (age in 0 until 10) {
+
+		}
+		for (i in 0..10) {
+
+		}
+		for (i in 0 until 10) {
+
+		}
+
+		for (i in 100 downTo 0) { //倒过来
+
+		}
+		for (i in 0..100 step 5) { //步长
+
+		}
 	}
 
 
 	//-----------------函数作为参数的函数的 写法  start-----------------
 	/**自己解决不了的事 交给别人做*/
 	private fun test19(a1: String, action1: (str1: String) -> Int): Boolean {
-		return a1.equals(action1("100").toString())
+		return a1.equals(action1.invoke("100").toString())
 	}
 
 	private fun test21(action1: (str1: String) -> Int): Boolean {
@@ -514,6 +532,10 @@ class KotlinDemoTest() {
 			"100" -> 100
 			else -> 50
 		}
+	}
+
+	private val action2: (str1: String) -> Int = { str1 ->
+		5
 	}
 
 	private val action1 = { str1: String ->

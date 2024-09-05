@@ -1,5 +1,6 @@
 package com.example.mytest2023.module.Coroutine
 
+import android.os.SystemClock
 import android.util.Log
 import com.example.mytest2023.helper.TimeHelper
 import com.example.mytest2023.module.Foundation.FoundationActivity
@@ -18,7 +19,13 @@ class CoroutineActivity : FoundationActivity() {
 		txt1.text = "协程2"
 		txt2.text = data
 
-		test0()
+		// 这是Android提供线程休眠函数，与Thread.sleep()最大的区别是
+		// 该使用该函数不会抛出InterruptedException异常。
+		SystemClock.sleep(20 * 1000);
+
+//		testfor()
+//不用join()和await(),都能执行launch和async 立即执行，同步，不挂起
+//		test0()
 //		//两者各开了一条线程
 //		test1()
 //		test2()
@@ -32,6 +39,29 @@ class CoroutineActivity : FoundationActivity() {
 //			testCoroutineContext2()
 //		}
 //		coroutineScopeCancel()
+	}
+
+	private fun testfor() {
+		val list = listOf<Int>(0, 1, 2, 3, 4, 5)
+		run breaking@{
+			list.forEach continuing@{ i ->
+				if (i == 3) {
+					Log.e(TAG, "initView: 3到了")
+					return@continuing
+				}
+				Log.e(TAG, "initView: " + i)
+			}
+		}
+		Log.e(TAG, "initView: 结束")
+
+		for (i: Int in 0..9) {
+			if (i == 4) {
+				Log.e(TAG, "initView: 4到了")
+				break
+			}
+			Log.e(TAG, "initView: " + i)
+		}
+		Log.e(TAG, "initView: 结束2")
 	}
 
 	private fun test0() {
@@ -54,13 +84,11 @@ class CoroutineActivity : FoundationActivity() {
 			val arg1 = sunpendF1()     //第49秒  （suspend立即挂起，不阻塞线程，等完成再恢复 执行下面的）
 			var arg2 = sunpendF2()     //第53秒
 			Log.e(
-				TAG,
-				"test1结束1 ${TimeHelper.currentTime()}:"
+				TAG, "test1结束1 ${TimeHelper.currentTime()}:"
 			)//第53秒
 
 			Log.e(
-				TAG,
-				"test1结束2 ${TimeHelper.currentTime()}: $arg1  arg2:$arg2  result:${arg1 + arg2}"
+				TAG, "test1结束2 ${TimeHelper.currentTime()}: $arg1  arg2:$arg2  result:${arg1 + arg2}"
 			) //第53秒
 		}
 	}
@@ -171,17 +199,24 @@ class CoroutineActivity : FoundationActivity() {
 
 	private fun test5() { //join() 可以按顺序执行，123，不然的话312
 		CoroutineScope(Dispatchers.IO).launch {
+			Log.e(TAG, "test5----第 3个任务开始")
 			val job1 = launch(start = CoroutineStart.LAZY) {
 				delay(1000)
 				Log.e(TAG, "test5----第 1 个任务")
 			}
+//			val job1 = launch {
+//				Log.e(TAG, "test5----第 1 个任务开始")
+//				delay(1000)
+//				Log.e(TAG, "test5----第 1 个任务结束")
+//			}
 			job1.join() //挂起函数
 			val job2 = launch {
+				Log.e(TAG, "test5----第 2 个任务开始")
 				delay(2000)
-				Log.e(TAG, "test5----第 2 个任务")
+				Log.e(TAG, "test5----第 2 个任务结束")
 			}
 			job2.join()//挂起函数
-			Log.e(TAG, "test5----第 3个任务")
+			Log.e(TAG, "test5----第 3个任务结束")
 		}
 	}
 
@@ -198,15 +233,15 @@ class CoroutineActivity : FoundationActivity() {
 				Log.e(TAG, "test6: 第二个：${TimeHelper.currentTime()}") //42秒
 				4
 			} //job1,job2 并行
-			val num1 = job1.await() //挂起，注意不要写在上面，否则是变为串行了 ，阻塞，执行完再往下执行
+//			val num1 = job1.await() //挂起，注意不要写在上面，否则是变为串行了 ，阻塞，执行完再往下执行
 			Log.e(TAG, "test6: 结束1：${TimeHelper.currentTime()}") //44秒
-			val num2 = job2.await() //挂起
+//			val num2 = job2.await() //挂起
 			Log.e(TAG, "test6: 结束2：${TimeHelper.currentTime()}")//44秒
 			val sdf = withContext(Dispatchers.Main) {
-				Log.e(TAG, "test6: 第三个：${num1 + num2} ${TimeHelper.currentTime()}") //44秒
+//				Log.e(TAG, "test6: 第三个：${num1 + num2} ${TimeHelper.currentTime()}") //44秒
 				"fg"
 			}
-
+			//一般用串行
 			//注意：注意：大多数await做串行时 可用withContext代替
 
 
@@ -359,16 +394,12 @@ class CoroutineActivity : FoundationActivity() {
 			//打印协程相关信息
 			Log.d(
 				"liu",
-				"3 Job Info: ${coroutineContext[Job]}  ${coroutineContext[CoroutineName]}" +
-						" ${coroutineContext[CoroutineExceptionHandler]} " +
-						", Thread info: ${Thread.currentThread().name}"
+				"3 Job Info: ${coroutineContext[Job]}  ${coroutineContext[CoroutineName]}" + " ${coroutineContext[CoroutineExceptionHandler]} " + ", Thread info: ${Thread.currentThread().name}"
 			)
 			val job2 = async {
 				Log.d(
 					"liu",
-					"4 Job Info: ${coroutineContext[Job]} ${coroutineContext[CoroutineName]}" +
-							" ${coroutineContext[CoroutineExceptionHandler]} " +
-							", Thread info: ${Thread.currentThread().name}"
+					"4 Job Info: ${coroutineContext[Job]} ${coroutineContext[CoroutineName]}" + " ${coroutineContext[CoroutineExceptionHandler]} " + ", Thread info: ${Thread.currentThread().name}"
 				)
 			}
 			job2.await()

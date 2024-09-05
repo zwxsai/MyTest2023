@@ -5,3 +5,4 @@ rootProject.name = "MyTest2023"
 //定义子项目
 include ':app'
 include ':myarr1'
+
