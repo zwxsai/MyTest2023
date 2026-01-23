@@ -12,5 +12,5 @@ interface IBB {
 		get() = 4
 		set(value) = TODO()
 
-	fun funRun(str1: String, num1: Int): Boolean;
+	fun funRun(str1: String, num1: Int): Boolean
 }

@@ -70,7 +70,7 @@ class KotlinActivity : AppCompatActivity() {
 		val view: TextView = findViewById<TextView>(this) //this代表int
 		view.setOnClickListener(View.OnClickListener {
 			ToastUtil.showMsg(context, "AA")
-//			action(view)
+//			action1(view)
 			action1.invoke(view)
 		})
 	}

@@ -3,6 +3,10 @@ package com.example.mytest2023.module.Home;
 import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -27,6 +31,8 @@ import com.yanzhenjie.permission.Action;
 import java.util.ArrayList;
 import java.util.List;
 
+import androidx.annotation.NonNull;
+import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import butterknife.BindView;
@@ -42,7 +48,7 @@ public class MainActivity extends BaseActivity {
 
     @BindView(R.id.bbl) BottomBarLayout bbl;
     @BindView(R.id.viewPager) CustomViewPager viewPager;
-//    @BindView(R.id.fl_content) CustomViewPager fl_content;
+    //    @BindView(R.id.fl_content) CustomViewPager fl_content;
 
     private List<String> titles = new ArrayList<>();
     private List<Fragment> mFragmentList = new ArrayList<>();
@@ -64,6 +70,43 @@ public class MainActivity extends BaseActivity {
         initPermission();
         initFragment();
         initListener();
+
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            Log.e("ekrjtle", "没有权限");
+            return;
+        }
+        LocationManager locationManager = (LocationManager) getSystemService(Context
+                .LOCATION_SERVICE);
+        LocationListener locationListener = new LocationListener() {
+            @Override
+            public void onLocationChanged(@NonNull Location location) {
+                Log.e("ekrjtle", "cPostion1:" + location.getLatitude());
+            }
+
+            @Override
+            public void onFlushComplete(int requestCode) {
+                Log.e("ekrjtle", "onFlushComplete:" + requestCode);
+            }
+
+            @Override
+            public void onLocationChanged(@NonNull List<Location> locations) {
+                Log.e("ekrjtle", "onLocationChanged:" + locations.toString());
+            }
+
+            @Override
+            public void onProviderEnabled(@NonNull String provider) {
+                Log.e("ekrjtle", "onProviderEnabled: " + provider);
+            }
+
+            @Override
+            public void onProviderDisabled(@NonNull String provider) {
+                Log.e("ekrjtle", "onProviderDisabled: " + provider);
+            }
+        };
+        List<String> prList = locationManager.getAllProviders();
+        Log.e("ekrjtle", "prList: " + prList.toString());
+        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000, 1, locationListener);
+
     }
 
     private void initFragment() {
@@ -87,12 +130,12 @@ public class MainActivity extends BaseActivity {
 
 
     private void changeFragment(int currentPosition) {
-//        viewPager.setCurrentItem(currentPosition);
+        //        viewPager.setCurrentItem(currentPosition);
         viewPager.setCurrentItem(currentPosition, false);
-//        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-//        transaction.replace(R.id.fl_content, mFragmentList.get(currentPosition));
-//        transaction.addToBackStack("fr" + currentPosition);
-//        transaction.commit();
+        //        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        //        transaction.replace(R.id.fl_content, mFragmentList.get(currentPosition));
+        //        transaction.addToBackStack("fr" + currentPosition);
+        //        transaction.commit();
     }
 
     private void initListener() {

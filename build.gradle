@@ -14,7 +14,7 @@ buildscript { //构建脚本
     }
     dependencies { // 依赖项
         //Gradle 插件及使用版本
-        classpath 'com.android.tools.build:gradle:7.0.4'
+        classpath 'com.android.tools.build:gradle:7.4.2'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
         classpath "org.greenrobot:greendao-gradle-plugin:$greendao_version" //GreenDao3依赖
         classpath 'com.jakewharton:butterknife-gradle-plugin:10.2.3'

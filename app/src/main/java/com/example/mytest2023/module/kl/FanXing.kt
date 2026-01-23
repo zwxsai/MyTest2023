@@ -5,12 +5,12 @@ package com.example.mytest2023.module.kl
  *Describer: 泛型
  */
 class FanXing<T>(_item: T) {
-	private var item: T = _item;
+    private var item: T = _item;
 
-	val isGo = false
+    val isGo = false
 
-	private fun testFun1(): T? {
-		var tt: T? = null
-		return tt;
-	}
+    private fun testFun1(): T? {
+        var tt: T? = null
+        return tt;
+    }
 }
