@@ -1,5 +1,6 @@
 package com.example.mytest2023.module.Home;
 
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
@@ -9,7 +10,6 @@ import com.google.android.material.appbar.AppBarLayout;
 
 import androidx.constraintlayout.motion.widget.MotionLayout;
 import androidx.core.widget.NestedScrollView;
-import butterknife.BindView;
 
 /**
  * Created by 钟文祥 on 2023-04-14.
@@ -18,12 +18,12 @@ import butterknife.BindView;
 public class Home5Fragment extends BaseFragment {
 
 
-    @BindView(R.id.backgroundIcon) ImageView backgroundIcon;
-    @BindView(R.id.iv_search) ImageView ivSearch;
-    @BindView(R.id.search) RelativeLayout search;
-    @BindView(R.id.ml) MotionLayout ml;
-    @BindView(R.id.app_layout) AppBarLayout appLayout;
-    @BindView(R.id.scrollable) NestedScrollView scrollable;
+    private ImageView backgroundIcon;
+    private ImageView ivSearch;
+    private RelativeLayout search;
+    private MotionLayout ml;
+    private AppBarLayout appLayout;
+    private NestedScrollView scrollable;
 
     public static Home5Fragment newInstance() {
         Home5Fragment fragment = new Home5Fragment();
@@ -36,7 +36,7 @@ public class Home5Fragment extends BaseFragment {
     }
 
     @Override
-    public void initView() {
+    public void initView(View view) {
         appLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
             @Override
             public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
@@ -59,4 +59,12 @@ public class Home5Fragment extends BaseFragment {
     }
 
 
+    private void findView(View view) {
+        backgroundIcon = view.findViewById(R.id.backgroundIcon);
+        ivSearch = view.findViewById(R.id.iv_search);
+        search = view.findViewById(R.id.search);
+        ml = view.findViewById(R.id.ml);
+        appLayout = view.findViewById(R.id.app_layout);
+        scrollable = view.findViewById(R.id.scrollable);
+    }
 }

@@ -17,9 +17,10 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.bigkoo.alertview.AlertViewAdapter;
-import com.bigkoo.alertview.OnDismissListener;
-import com.bigkoo.alertview.OnItemClickListener;
+import com.example.mytest2023.R;
+import com.example.mytest2023.widget.alertview.AlertViewAdapter;
+import com.example.mytest2023.widget.alertview.OnDismissListener;
+import com.example.mytest2023.widget.alertview.OnItemClickListener;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
@@ -129,18 +130,18 @@ public class IOSAlertView {
         LayoutInflater layoutInflater = LayoutInflater.from(context);
         decorView = (ViewGroup) ((Activity) context).getWindow().getDecorView().findViewById
                 (android.R.id.content);
-        rootView = (ViewGroup) layoutInflater.inflate(com.bigkoo.alertview.R.layout
+        rootView = (ViewGroup) layoutInflater.inflate(R.layout
                         .layout_alertview, decorView,
                 false);
         rootView.setLayoutParams(new FrameLayout.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT
         ));
-        contentContainer = (ViewGroup) rootView.findViewById(com.bigkoo.alertview.R.id.content_container);
+        contentContainer = (ViewGroup) rootView.findViewById(R.id.content_container);
         int margin_alert_left_right = 0;
         switch (style) {
             case ActionSheet:
                 params.gravity = Gravity.BOTTOM;
-                margin_alert_left_right = context.getResources().getDimensionPixelSize(com.bigkoo.alertview.R.dimen
+                margin_alert_left_right = context.getResources().getDimensionPixelSize(R.dimen
                         .margin_actionsheet_left_right);
                 params.setMargins(margin_alert_left_right, 0, margin_alert_left_right,
                         margin_alert_left_right);
@@ -150,29 +151,28 @@ public class IOSAlertView {
                 break;
             case Alert:
                 params.gravity = Gravity.CENTER;
-                margin_alert_left_right = context.getResources().getDimensionPixelSize(com.bigkoo
-                        .alertview.R.dimen.margin_alert_left_right);
+                margin_alert_left_right = context.getResources().getDimensionPixelSize(R.dimen.margin_alert_left_right);
                 params.setMargins(margin_alert_left_right, 0, margin_alert_left_right, 0);
                 contentContainer.setLayoutParams(params);
                 gravity = Gravity.CENTER;
                 initIOSAlertViews(layoutInflater);
 
-//                params.gravity = Gravity.CENTER;
-//                margin_alert_left_right = context.getResources().getDimensionPixelSize(R.dimen
-//                        .ios_margin_alert_left_right);
-//                params.setMargins(margin_alert_left_right, 0, margin_alert_left_right, 0);
-//                contentContainer.setLayoutParams(params);
-//                gravity = Gravity.CENTER;
-//                initIOSAlertViews(layoutInflater);
+                //                params.gravity = Gravity.CENTER;
+                //                margin_alert_left_right = context.getResources().getDimensionPixelSize(R.dimen
+                //                        .ios_margin_alert_left_right);
+                //                params.setMargins(margin_alert_left_right, 0, margin_alert_left_right, 0);
+                //                contentContainer.setLayoutParams(params);
+                //                gravity = Gravity.CENTER;
+                //                initIOSAlertViews(layoutInflater);
                 break;
         }
     }
 
     protected void initHeaderView(ViewGroup viewGroup) {
-        loAlertHeader = (ViewGroup) viewGroup.findViewById(com.bigkoo.alertview.R.id.loAlertHeader);
+        loAlertHeader = (ViewGroup) viewGroup.findViewById(R.id.loAlertHeader);
         //标题和消息
-        TextView tvAlertTitle = (TextView) viewGroup.findViewById(com.bigkoo.alertview.R.id.tvAlertTitle);
-        TextView tvAlertMsg = (TextView) viewGroup.findViewById(com.bigkoo.alertview.R.id.tvAlertMsg);
+        TextView tvAlertTitle = (TextView) viewGroup.findViewById(R.id.tvAlertTitle);
+        TextView tvAlertMsg = (TextView) viewGroup.findViewById(R.id.tvAlertMsg);
         if (title != null) {
             tvAlertTitle.setText(title);
         } else {
@@ -189,18 +189,18 @@ public class IOSAlertView {
         Context context = contextWeak.get();
         if (context == null) return;
 
-        ListView alertButtonListView = (ListView) contentContainer.findViewById(com.bigkoo.alertview.R.id
+        ListView alertButtonListView = (ListView) contentContainer.findViewById(R.id
                 .alertButtonListView);
         //把cancel作为footerView
         if (cancel != null && style == Style.Alert) {
-            View itemView = LayoutInflater.from(context).inflate(com.bigkoo.alertview.R.layout.item_alertbutton, null);
-            TextView tvAlert = (TextView) itemView.findViewById(com.bigkoo.alertview.R.id.tvAlert);
+            View itemView = LayoutInflater.from(context).inflate(R.layout.item_alertbutton, null);
+            TextView tvAlert = (TextView) itemView.findViewById(R.id.tvAlert);
             tvAlert.setText(cancel);
             tvAlert.setClickable(true);
             tvAlert.setTypeface(Typeface.DEFAULT_BOLD);
-            tvAlert.setTextColor(context.getResources().getColor(com.bigkoo.alertview.R.color
+            tvAlert.setTextColor(context.getResources().getColor(R.color
                     .textColor_alert_button_cancel));
-            tvAlert.setBackgroundResource(com.bigkoo.alertview.R.drawable.bg_alertbutton_bottom);
+            tvAlert.setBackgroundResource(R.drawable.bg_alertbutton_bottom);
             tvAlert.setOnClickListener(new OnTextClickListener(CANCELPOSITION));
             alertButtonListView.addFooterView(itemView);
         }
@@ -217,12 +217,12 @@ public class IOSAlertView {
     }
 
     protected void initActionSheetViews(LayoutInflater layoutInflater) {
-        ViewGroup viewGroup = (ViewGroup) layoutInflater.inflate(com.bigkoo.alertview.R.layout
+        ViewGroup viewGroup = (ViewGroup) layoutInflater.inflate(R.layout
                 .layout_alertview_actionsheet, contentContainer);
         initHeaderView(viewGroup);
 
         initListView();
-        TextView tvAlertCancel = (TextView) contentContainer.findViewById(com.bigkoo.alertview.R.id.tvAlertCancel);
+        TextView tvAlertCancel = (TextView) contentContainer.findViewById(R.id.tvAlertCancel);
         if (cancel != null) {
             tvAlertCancel.setVisibility(View.VISIBLE);
             tvAlertCancel.setText(cancel);
@@ -234,41 +234,41 @@ public class IOSAlertView {
         Context context = contextWeak.get();
         if (context == null) return;
 
-        ViewGroup viewGroup = (ViewGroup) layoutInflater.inflate(com.bigkoo.alertview.R.layout
+        ViewGroup viewGroup = (ViewGroup) layoutInflater.inflate(R.layout
                 .layout_alertview_alert, contentContainer);
         initHeaderView(viewGroup);
 
         int position = 0;
         //如果总数据小于等于HORIZONTAL_BUTTONS_MAXCOUNT，则是横向button
         if (mDatas.size() <= HORIZONTAL_BUTTONS_MAXCOUNT) {
-            ViewStub viewStub = (ViewStub) contentContainer.findViewById(com.bigkoo.alertview.R.id.viewStubHorizontal);
+            ViewStub viewStub = (ViewStub) contentContainer.findViewById(R.id.viewStubHorizontal);
             viewStub.inflate();
-            LinearLayout loAlertButtons = (LinearLayout) contentContainer.findViewById(com.bigkoo.alertview.R.id
+            LinearLayout loAlertButtons = (LinearLayout) contentContainer.findViewById(R.id
                     .loAlertButtons);
             for (int i = 0; i < mDatas.size(); i++) {
                 //如果不是第一个按钮
                 if (i != 0) {
                     //添加上按钮之间的分割线
                     View divier = new View(context);
-                    divier.setBackgroundColor(context.getResources().getColor(com.bigkoo.alertview.R.color
+                    divier.setBackgroundColor(context.getResources().getColor(R.color
                             .bgColor_divier));
                     LinearLayout.LayoutParams params = new LinearLayout.LayoutParams((int)
-                            context.getResources().getDimension(com.bigkoo.alertview.R.dimen.size_divier),
+                            context.getResources().getDimension(R.dimen.size_divier),
                             LinearLayout.LayoutParams.MATCH_PARENT);
                     loAlertButtons.addView(divier, params);
                 }
-                View itemView = LayoutInflater.from(context).inflate(com.bigkoo.alertview.R.layout.item_alertbutton,
+                View itemView = LayoutInflater.from(context).inflate(R.layout.item_alertbutton,
                         null);
-                TextView tvAlert = (TextView) itemView.findViewById(com.bigkoo.alertview.R.id.tvAlert);
+                TextView tvAlert = (TextView) itemView.findViewById(R.id.tvAlert);
                 tvAlert.setClickable(true);
 
                 //设置点击效果
                 if (mDatas.size() == 1) {
-                    tvAlert.setBackgroundResource(com.bigkoo.alertview.R.drawable.bg_alertbutton_bottom);
+                    tvAlert.setBackgroundResource(R.drawable.bg_alertbutton_bottom);
                 } else if (i == 0) {//设置最左边的按钮效果
-                    tvAlert.setBackgroundResource(com.bigkoo.alertview.R.drawable.bg_alertbutton_left);
+                    tvAlert.setBackgroundResource(R.drawable.bg_alertbutton_left);
                 } else if (i == mDatas.size() - 1) {//设置最右边的按钮效果
-                    tvAlert.setBackgroundResource(com.bigkoo.alertview.R.drawable.bg_alertbutton_right);
+                    tvAlert.setBackgroundResource(R.drawable.bg_alertbutton_right);
                 }
                 String data = mDatas.get(i);
                 tvAlert.setText(data);
@@ -276,7 +276,7 @@ public class IOSAlertView {
                 //取消按钮的样式
                 if (data == cancel) {
                     tvAlert.setTypeface(Typeface.DEFAULT_BOLD);
-                    tvAlert.setTextColor(context.getResources().getColor(com.bigkoo.alertview.R.color
+                    tvAlert.setTextColor(context.getResources().getColor(R.color
                             .textColor_alert_button_cancel));
                     tvAlert.setOnClickListener(new OnTextClickListener
                             (CANCELPOSITION));
@@ -284,7 +284,7 @@ public class IOSAlertView {
                 }
                 //高亮按钮的样式
                 else if (mDestructive != null && mDestructive.contains(data)) {
-                    tvAlert.setTextColor(context.getResources().getColor(com.bigkoo.alertview.R.color
+                    tvAlert.setTextColor(context.getResources().getColor(R.color
                             .textColor_alert_button_destructive));
                 }
 
@@ -295,7 +295,7 @@ public class IOSAlertView {
                         LinearLayout.LayoutParams.WRAP_CONTENT, 1));
             }
         } else {
-            ViewStub viewStub = (ViewStub) contentContainer.findViewById(com.bigkoo.alertview.R.id.viewStubVertical);
+            ViewStub viewStub = (ViewStub) contentContainer.findViewById(R.id.viewStubVertical);
             viewStub.inflate();
             initListView();
         }
@@ -369,11 +369,9 @@ public class IOSAlertView {
     private int getAnimationResource(int gravity, boolean isInAnimation) {
         switch (gravity) {
             case Gravity.BOTTOM:
-                return isInAnimation ? com.bigkoo.alertview.R.anim.slide_in_bottom : com.bigkoo
-                        .alertview.R.anim.slide_out_bottom;
+                return isInAnimation ? R.anim.slide_in_bottom : R.anim.slide_out_bottom;
             case Gravity.CENTER:
-                return isInAnimation ? com.bigkoo.alertview.R.anim.fade_in_center : com.bigkoo
-                        .alertview.R.anim.fade_out_center;
+                return isInAnimation ? R.anim.fade_in_center : R.anim.fade_out_center;
         }
         return INVALID;
     }
@@ -439,14 +437,14 @@ public class IOSAlertView {
         Context context = contextWeak.get();
         if (context == null) return;
 
-        int margin_alert_left_right = context.getResources().getDimensionPixelSize(com.bigkoo.alertview.R.dimen
+        int margin_alert_left_right = context.getResources().getDimensionPixelSize(R.dimen
                 .margin_alert_left_right);
         params.setMargins(margin_alert_left_right, 0, margin_alert_left_right, marginBottom);
         contentContainer.setLayoutParams(params);
     }
 
     public IOSAlertView setCancelable(boolean isCancelable) {
-        View view = rootView.findViewById(com.bigkoo.alertview.R.id.outmost_container);
+        View view = rootView.findViewById(R.id.outmost_container);
 
         if (isCancelable) {
             view.setOnTouchListener(onCancelableTouchListener);
@@ -520,7 +518,7 @@ public class IOSAlertView {
         }
 
         public Builder setOnItemClickListener(OnItemClickListener
-                                                                   onItemClickListener) {
+                                                      onItemClickListener) {
             this.onItemClickListener = onItemClickListener;
             return this;
         }

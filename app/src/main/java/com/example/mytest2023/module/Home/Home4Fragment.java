@@ -25,7 +25,6 @@ import java.util.List;
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
-import butterknife.BindView;
 import io.reactivex.disposables.Disposable;
 
 /**
@@ -35,17 +34,19 @@ import io.reactivex.disposables.Disposable;
 public class Home4Fragment extends BaseFragment {
 
 
-    @BindView(R.id.header) MaterialHeader header;
-    @BindView(R.id.toolbar) Toolbar toolbar;
-    @BindView(R.id.tab) TabLayout mTabLayout;
-    @BindView(R.id.app_bar) AppBarLayout appBar;
-    @BindView(R.id.viewPager) CustomViewPager mViewPager;
-    @BindView(R.id.refreshLayout) SmartRefreshLayout refreshLayout;
-    @BindView(R.id.waibu) TextView waibu;
+    private MaterialHeader header;
+    private Toolbar toolbar;
+    private TabLayout mTabLayout;
+    private AppBarLayout appBar;
+    private CustomViewPager mViewPager;
+    private SmartRefreshLayout refreshLayout;
+    private TextView waibu;
 
     private List<String> titles = new ArrayList<>();
     private ArrayList<Fragment> mFragments = new ArrayList<>();
     private BasePagerAdapter adapter;
+    private TabLayout tab;
+    private CustomViewPager viewPager;
 
     public static Home4Fragment newInstance() {
         Home4Fragment fragment = new Home4Fragment();
@@ -58,7 +59,8 @@ public class Home4Fragment extends BaseFragment {
     }
 
     @Override
-    public void initView() {
+    public void initView(View view) {
+        findView(view);
         appBar.addOnOffsetChangedListener(new MyOnOffsetChangedListener());
         adapter = new BasePagerAdapter(getActivity().getSupportFragmentManager(), titles, mFragments);
         mViewPager.setAdapter(adapter);
@@ -82,6 +84,16 @@ public class Home4Fragment extends BaseFragment {
     }
 
     private int oldVerticalOffset = -1;
+
+    private void findView(View view) {
+        header = view.findViewById(R.id.header);
+        toolbar = view.findViewById(R.id.toolbar);
+        tab = view.findViewById(R.id.tab);
+        appBar = view.findViewById(R.id.app_bar);
+        viewPager = view.findViewById(R.id.viewPager);
+        waibu = view.findViewById(R.id.waibu);
+        refreshLayout = view.findViewById(R.id.refreshLayout);
+    }
 
     private class MyOnOffsetChangedListener implements AppBarLayout.OnOffsetChangedListener {
         @Override

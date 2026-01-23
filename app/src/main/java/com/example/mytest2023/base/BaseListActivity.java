@@ -12,29 +12,25 @@ import com.example.mytest2023.helper.RecyclerViewHelper;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
 
 /**
  * Created by 钟文祥 on 2019/7/q0.
  * Describer: list基类Activity
  */
-public class BaseListActivity extends BaseActivity {
-
-    @BindView(R.id.base_rv) RecyclerView baseRv;
-    @BindView(R.id.btn_back) ImageView btnBack;
-    @BindView(R.id.view_top) LinearLayout viewTop;
-    @BindView(R.id.txt_title) TextView txtTitle;
+public class BaseListActivity extends BaseActivity implements View.OnClickListener {
 
     private boolean isShowTopView = false;
     private String title = "";
+    private ImageView btnBack;
+    private TextView txtTitle;
+    private LinearLayout viewTop;
+    private RecyclerView baseRv;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_base_list);
-        ButterKnife.bind(this);
         initView();
     }
 
@@ -53,6 +49,11 @@ public class BaseListActivity extends BaseActivity {
 
         RecyclerViewHelper.init(this, baseRv, new LinearLayoutManager(this), true);
         baseRv.setAdapter(initAdapter());
+        btnBack = findViewById(R.id.btn_back);
+        btnBack.setOnClickListener(this);
+        txtTitle = findViewById(R.id.txt_title);
+        viewTop = findViewById(R.id.view_top);
+        baseRv = findViewById(R.id.base_rv);
     }
 
     protected RecyclerView.Adapter initAdapter() {
@@ -63,11 +64,18 @@ public class BaseListActivity extends BaseActivity {
         return baseRv;
     }
 
-    @OnClick({R.id.btn_back})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.btn_back:
                 finish();
+                break;
+        }
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.btn_back:
                 break;
         }
     }

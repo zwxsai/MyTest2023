@@ -26,7 +26,7 @@
         android:layout_height="100dp"
         android:background="@color/gray" />
 
-    <com.eric.android.view.ExpandableTextView
+    <com.example.mytest2023.widget.other.ExpandableTextView
         android:id="@+id/expand_tv1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -44,7 +44,7 @@
         app:tipPosition="align_right"
         app:tipsColor="#08f017" />
 
-    <com.eric.android.view.ExpandableTextView
+    <com.example.mytest2023.widget.other.ExpandableTextView
         android:id="@+id/expand_tv2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -62,7 +62,7 @@
         app:tipPosition="bottom_start"
         app:tipsColor="#d521e9" />
 
-    <com.eric.android.view.ExpandableTextView
+    <com.example.mytest2023.widget.other.ExpandableTextView
         android:id="@+id/expand_tv3"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -80,7 +80,7 @@
         app:tipPosition="bottom_center"
         app:tipsColor="#08baf0" />
 
-    <com.eric.android.view.ExpandableTextView
+    <com.example.mytest2023.widget.other.ExpandableTextView
         android:id="@+id/expand_tv4"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

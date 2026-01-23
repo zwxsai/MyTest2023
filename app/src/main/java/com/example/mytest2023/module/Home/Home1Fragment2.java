@@ -20,8 +20,6 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
 
 /**
  * Created by 钟文祥 on 2023-04-18.
@@ -29,7 +27,7 @@ import butterknife.ButterKnife;
  */
 public class Home1Fragment2 extends Fragment {
 
-    @BindView(R.id.rv) RecyclerView rv;
+    private RecyclerView rv;
 
     private Home1Adapter adapter;
     private List<Home1Item> list;
@@ -44,8 +42,8 @@ public class Home1Fragment2 extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         View rootView = inflater.inflate(setLayout(), container, false);
-        ButterKnife.bind(this, rootView);
 
+        rv = rootView.findViewById(R.id.rv);
         return rootView;
     }
 

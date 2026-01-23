@@ -3,6 +3,7 @@ package com.example.mytest2023.module.Home;
 import android.content.Context;
 import android.graphics.PointF;
 import android.util.Log;
+import android.view.View;
 
 import com.example.mytest2023.R;
 import com.example.mytest2023.base.BaseFragment;
@@ -18,16 +19,15 @@ import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearSmoothScroller;
 import androidx.recyclerview.widget.RecyclerView;
-import butterknife.BindView;
 
 /**
  * Created by 钟文祥 on 2023-04-14.
  * Describer: 首页3 吸顶+tab+直落 （像淘宝）
  */
 public class Home3Fragment extends BaseFragment {
-    @BindView(R.id.tb_demo5_content) TabLayout tb_demo5_content;
-    @BindView(R.id.abl_demo5_content) AppBarLayout abl_demo5_content;
-    @BindView(R.id.rv_demo5_content) RecyclerView rv_demo5_content;
+    private TabLayout tb_demo5_content;
+    private AppBarLayout abl_demo5_content;
+    private RecyclerView rv_demo5_content;
 
     private List<Demo5Bean> data;
     private GridLayoutManager gridLayoutManager;
@@ -47,7 +47,10 @@ public class Home3Fragment extends BaseFragment {
     }
 
     @Override
-    public void initView() {
+    public void initView(View view) {
+        tb_demo5_content = view.findViewById(R.id.tb_demo5_content);
+        abl_demo5_content = view.findViewById(R.id.abl_demo5_content);
+        rv_demo5_content = view.findViewById(R.id.rv_demo5_content);
         initData();
         initTabLayout();
         initRecyclerView();

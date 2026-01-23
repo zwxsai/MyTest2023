@@ -35,8 +35,6 @@ import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
-import butterknife.BindView;
-import butterknife.ButterKnife;
 import io.reactivex.disposables.Disposable;
 
 /**
@@ -46,8 +44,8 @@ import io.reactivex.disposables.Disposable;
 public class MainActivity extends BaseActivity {
 
 
-    @BindView(R.id.bbl) BottomBarLayout bbl;
-    @BindView(R.id.viewPager) CustomViewPager viewPager;
+    private BottomBarLayout bbl;
+    private CustomViewPager viewPager;
     //    @BindView(R.id.fl_content) CustomViewPager fl_content;
 
     private List<String> titles = new ArrayList<>();
@@ -66,7 +64,8 @@ public class MainActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        ButterKnife.bind(this);
+        bbl = findViewById(R.id.bbl);
+        viewPager = findViewById(R.id.viewPager);
         initPermission();
         initFragment();
         initListener();

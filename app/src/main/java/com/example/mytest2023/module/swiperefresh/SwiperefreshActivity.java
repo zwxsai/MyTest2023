@@ -1,16 +1,10 @@
 package com.example.mytest2023.module.swiperefresh;
 
-import androidx.annotation.ColorInt;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
-import butterknife.BindView;
-import butterknife.ButterKnife;
 
 import android.annotation.SuppressLint;
-import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,14 +30,13 @@ import com.example.mytest2023.module.mvvm.RoomMvvmActivity;
 import com.example.mytest2023.module.viewpager2.ViewPager2Activity;
 import com.example.mytest2023.widget.other.CustomLoadMoreView;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 public class SwiperefreshActivity extends AppCompatActivity {
 
-    @BindView(R.id.rv) RecyclerView rv;
-//    @BindView(R.id.swipeRefreshLayout) SwipeRefreshLayout swipeRefreshLayout;
+    private RecyclerView rv;
+    //    @BindView(R.id.swipeRefreshLayout) SwipeRefreshLayout swipeRefreshLayout;
 
     private Home1BRVAHAdapter brvahAdapter;
     private List<Home1Item> list = new ArrayList<>();
@@ -52,7 +45,7 @@ public class SwiperefreshActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_swiperefresh);
-        ButterKnife.bind(this);
+        rv = findViewById(R.id.rv);
         initData(false);
         initView();
     }
@@ -62,8 +55,9 @@ public class SwiperefreshActivity extends AppCompatActivity {
         RecyclerViewHelper.init(this, rv, new LinearLayoutManager(this), true);
 
         brvahAdapter = new Home1BRVAHAdapter(this, list);
-//        View headView = getLayoutInflater().inflate(R.layout.top_view, (ViewGroup) mRecyclerView.getParent(), false);
-//        brvahAdapter.addHeaderView(headView); //添加头部
+        //        View headView = getLayoutInflater().inflate(R.layout.top_view, (ViewGroup) mRecyclerView.getParent
+        //        (), false);
+        //        brvahAdapter.addHeaderView(headView); //添加头部
 
         View nodataView = getLayoutInflater().inflate(R.layout.adapter_no_data, (ViewGroup) rv.getParent(), false);
         brvahAdapter.setEmptyView(nodataView);// 没有数据的时候默认显示该布局
@@ -80,38 +74,38 @@ public class SwiperefreshActivity extends AppCompatActivity {
             }
         });
         //子控件的点击事件
-//        brvahAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-////                if (view.getId() == R.id.ic_collect)
-//            }
-//        });
+        //        brvahAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+        //            @Override
+        //            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+        ////                if (view.getId() == R.id.ic_collect)
+        //            }
+        //        });
 
 
-//        //swipeRefreshLayout解决下拉问题
-//        swipeRefreshLayout.setColorSchemeResources(R.color.colorPrimary);
-//        swipeRefreshLayout.setProgressBackgroundColorSchemeColor(getResources().getColor(R.color.sandybrown));
-//        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-//            @Override
-//            public void onRefresh() {
-////                list.clear();
-////                initData(true);
-////                brvahAdapter.notifyDataSetChanged();
-//                brvahAdapter.getData().clear();
-//                brvahAdapter.addData(initData(true));
-//                swipeRefreshLayout.setRefreshing(false);
-//
-//            }
-//        });
+        //        //swipeRefreshLayout解决下拉问题
+        //        swipeRefreshLayout.setColorSchemeResources(R.color.colorPrimary);
+        //        swipeRefreshLayout.setProgressBackgroundColorSchemeColor(getResources().getColor(R.color.sandybrown));
+        //        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+        //            @Override
+        //            public void onRefresh() {
+        ////                list.clear();
+        ////                initData(true);
+        ////                brvahAdapter.notifyDataSetChanged();
+        //                brvahAdapter.getData().clear();
+        //                brvahAdapter.addData(initData(true));
+        //                swipeRefreshLayout.setRefreshing(false);
+        //
+        //            }
+        //        });
 
 
-//        brvahAdapter.setUpFetchEnable(true);
-//        brvahAdapter.setUpFetchListener(new BaseQuickAdapter.UpFetchListener() {
-//            @Override
-//            public void onUpFetch() {
-//                startUpFetch();
-//            }
-//        });
+        //        brvahAdapter.setUpFetchEnable(true);
+        //        brvahAdapter.setUpFetchListener(new BaseQuickAdapter.UpFetchListener() {
+        //            @Override
+        //            public void onUpFetch() {
+        //                startUpFetch();
+        //            }
+        //        });
 
 
         // 当列表滑动到倒数第N个Item的时候(默认是1)回调onLoadMoreRequested方法
@@ -136,7 +130,7 @@ public class SwiperefreshActivity extends AppCompatActivity {
         }, rv);
 
         //默认第一次加载会进入onLoadMoreRequested回调，如果不需要可以配置：
-//        brvahAdapter.disableLoadMoreIfNotFullPage();
+        //        brvahAdapter.disableLoadMoreIfNotFullPage();
 
         rv.setAdapter(brvahAdapter);
 
@@ -151,7 +145,7 @@ public class SwiperefreshActivity extends AppCompatActivity {
                 brvahAdapter.getData().clear();
                 int size = brvahAdapter.getData().size();
                 brvahAdapter.setNewData(initData(true));
-//                brvahAdapter.addData(initData(true));
+                //                brvahAdapter.addData(initData(true));
                 brvahAdapter.setUpFetching(false);
                 if (brvahAdapter.getData().size() >= 16) {
                     size = brvahAdapter.getData().size();
@@ -180,7 +174,7 @@ public class SwiperefreshActivity extends AppCompatActivity {
                 brvahAdapter.loadMoreFail();
             }
 
-//            brvahAdapter.loadMoreFail();       //本次加载失败
+            //            brvahAdapter.loadMoreFail();       //本次加载失败
         }
     }
 

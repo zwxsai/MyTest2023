@@ -1,10 +1,5 @@
 package com.example.mytest2023.module.Banner;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import kotlinx.coroutines.CoroutineScope;
-
-import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.View;
 
@@ -20,16 +15,17 @@ import com.zhpan.indicator.enums.IndicatorStyle;
 import java.util.ArrayList;
 import java.util.List;
 
+
 public class BannerActivity extends BaseActivity {
 
-    @BindView(R.id.main_vp) BannerViewPager<BannerData> bannerView;
+    private BannerViewPager<BannerData> bannerView;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_banner);
-        ButterKnife.bind(this);
+        bannerView = findViewById(R.id.main_vp);
         initBanner();
     }
 

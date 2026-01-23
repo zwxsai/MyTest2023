@@ -3,13 +3,13 @@ package com.example.mytest2023.module.Home;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.example.mytest2023.R;
 import com.example.mytest2023.base.BaseActivity;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
 import cn.bingoogolapple.bgabanner.BGABanner;
 import cn.bingoogolapple.bgabanner.BGALocalImageSize;
 
@@ -19,10 +19,10 @@ import cn.bingoogolapple.bgabanner.BGALocalImageSize;
  */
 public class GuideActivity extends BaseActivity {
 
-    @BindView(R.id.banner_guide_background) BGABanner bannerGuideBackground;
-    @BindView(R.id.banner_guide_foreground) BGABanner bannerGuideForeground;
-//    @BindView(R.id.tv_guide_skip) TextView tvGuideSkip;
-//    @BindView(R.id.btn_guide_enter) Button btnGuideEnter;
+    private BGABanner bannerGuideBackground;
+    private BGABanner bannerGuideForeground;
+    private TextView tvGuideSkip;
+    private Button btnGuideEnter;
 
 
     public static void openActivity(Context context) {
@@ -34,7 +34,7 @@ public class GuideActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_guide);
-        ButterKnife.bind(this);
+   findView();
         initGuide();
 
     }
@@ -83,5 +83,12 @@ public class GuideActivity extends BaseActivity {
 
         // 如果开发者的引导页主题是透明的，需要在界面可见时给背景 Banner 设置一个白色背景，避免滑动过程中两个 Banner 都设置透明度后能看到 Launcher
         bannerGuideBackground.setBackgroundResource(android.R.color.white);
+    }
+
+    private void findView() {
+        bannerGuideBackground = findViewById(R.id.banner_guide_background);
+        bannerGuideForeground = findViewById(R.id.banner_guide_foreground);
+        tvGuideSkip = findViewById(R.id.tv_guide_skip);
+        btnGuideEnter = findViewById(R.id.btn_guide_enter);
     }
 }

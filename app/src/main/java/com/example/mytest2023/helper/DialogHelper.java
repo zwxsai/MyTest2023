@@ -13,9 +13,8 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.bigkoo.alertview.AlertView;
-import com.bigkoo.alertview.OnItemClickListener;
 import com.example.mytest2023.R;
+import com.example.mytest2023.widget.alertview.OnItemClickListener;
 import com.example.mytest2023.widget.other.IOSAlertView;
 
 
@@ -162,20 +161,20 @@ public class DialogHelper {
                                        String leftStr,
                                        String rightStr, boolean isShowBtnCancel,
                                        OnItemClickListener listener) {
-        AlertView al = null;
+        IOSAlertView al = null;
         if (redMsg != null && !redMsg.equals("")) {
-            al = new AlertView(title, msg, isShowBtnCancel ? leftStr : null, null, new
+            al = new IOSAlertView(title, msg, isShowBtnCancel ? leftStr : null, null, new
                     String[]{rightStr}, context,
-                    AlertView.Style.Alert, listener);
+                    IOSAlertView.Style.Alert, listener);
             ViewGroup extView = (ViewGroup) LayoutInflater.from(context).inflate(R.layout
                     .widget_ios_alertext_form, null);
             TextView etName = extView.findViewById(R.id.wight_alerttext_form);
             etName.setText(redMsg + "\n   ");
             al.addExtView(extView);
         } else {
-            al = new AlertView(title, msg, isShowBtnCancel ? leftStr : null, new
+            al = new IOSAlertView(title, msg, isShowBtnCancel ? leftStr : null, new
                     String[]{rightStr}, null, context,
-                    AlertView.Style.Alert, listener);
+                    IOSAlertView.Style.Alert, listener);
         }
         al.setCancelable(true);
         try {

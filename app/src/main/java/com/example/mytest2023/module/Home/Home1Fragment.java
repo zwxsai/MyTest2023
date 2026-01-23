@@ -3,6 +3,7 @@ package com.example.mytest2023.module.Home;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.util.Log;
+import android.view.View;
 
 import com.example.mytest2023.R;
 import com.example.mytest2023.base.BaseFragment;
@@ -35,7 +36,6 @@ import java.util.List;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import butterknife.BindView;
 
 /**
  * Created by 钟文祥 on 2023-04-14.
@@ -44,7 +44,7 @@ import butterknife.BindView;
 public class Home1Fragment extends BaseFragment {
 
 
-    @BindView(R.id.rv) RecyclerView rv;
+    private RecyclerView rv;
 
 
     private Home1Adapter adapter1;
@@ -101,7 +101,8 @@ public class Home1Fragment extends BaseFragment {
 
     @SuppressLint("ResourceAsColor")
     @Override
-    public void initView() {
+    public void initView(View view) {
+        rv = view.findViewById(R.id.rv);
         Log.e("Home1Fragment", "initView: ");
         initData(true);
         RecyclerViewHelper.init(getActivity(), rv, new LinearLayoutManager(getActivity()), true);

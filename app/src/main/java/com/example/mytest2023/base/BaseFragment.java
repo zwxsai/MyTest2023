@@ -8,7 +8,6 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import butterknife.ButterKnife;
 
 /**
  * Created by dasu on 2016/9/27.
@@ -44,8 +43,8 @@ public abstract class BaseFragment extends Fragment {
         } else {
             throw new ClassCastException("type of setLayout() must be int or View!");
         }
-        ButterKnife.bind(this, view);
-        initView();
+        //        ButterKnife.bind(this, view);
+        initView(view);
         return view;
     }
 
@@ -145,7 +144,7 @@ public abstract class BaseFragment extends Fragment {
 
     public abstract Object setLayout();
 
-    public abstract void initView();
+    public abstract void initView(View view);
 
     /**
      * 去除setUserVisibleHint()多余的回调场景，保证只有当fragment可见状态发生变化时才回调

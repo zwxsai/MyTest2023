@@ -16,9 +16,7 @@ import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.databinding.ViewDataBinding;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.lifecycle.ViewModelProviders;
 
 /**
  * Created by 钟文祥 on 2023/6/15.
@@ -40,12 +38,12 @@ public abstract class BaseMvvmFragment<VM extends BaseViewModel, VDB extends Vie
         //给binding加上感知生命周期，AppCompatActivity就是lifeOwner
         mViewDataBind.setLifecycleOwner(getActivity());
 
-//        //获得泛型参数的实际类型
-//        Class<VM> vmClass =
-//                (Class<VM>) ((ParameterizedType) this.getClass().getGenericSuperclass())
-//                .getActualTypeArguments()[0];
-////        mViewModel = ViewModelProviders.of(this).get(vmClass);
-//        mViewModel = new ViewModelProvider(getActivity()).get(vmClass);
+        //        //获得泛型参数的实际类型
+        //        Class<VM> vmClass =
+        //                (Class<VM>) ((ParameterizedType) this.getClass().getGenericSuperclass())
+        //                .getActualTypeArguments()[0];
+        ////        mViewModel = ViewModelProviders.of(this).get(vmClass);
+        //        mViewModel = new ViewModelProvider(getActivity()).get(vmClass);
         //        mViewDataBind.setVariable(getBRVariableId(), mViewModel);
         createViewModel();
         return mViewDataBind.getRoot();
@@ -62,7 +60,8 @@ public abstract class BaseMvvmFragment<VM extends BaseViewModel, VDB extends Vie
                 //如果没有指定泛型参数，则默认使用BaseViewModel
                 modelClass = BaseViewModel.class;
             }
-            mViewModel = (VM) ViewModelProviders.of(getActivity()).get(modelClass);
+
+            mViewModel = (VM) (new ViewModelProvider(this)).get(modelClass);
         }
     }
 

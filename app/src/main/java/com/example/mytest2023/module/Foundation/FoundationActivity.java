@@ -13,9 +13,6 @@ import com.example.mytest2023.helper.OnItemRecyclerListener;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
 
 /**
  * Created by 钟文祥 on 2023/4/12.
@@ -25,33 +22,35 @@ import butterknife.OnClick;
  * * 参考 https://blog.csdn.net/qq_38350635/article/details/88878310   singleTop以这个url内容为准
  * * https://blog.csdn.net/xiajun2356033/article/details/78741121   这个urlsingleTop内容不准
  */
-public abstract class FoundationActivity extends AppCompatActivity {
+public abstract class FoundationActivity extends AppCompatActivity implements View.OnClickListener {
 
-    protected @BindView(R.id.txt1) TextView txt1;
-    protected @BindView(R.id.txt2) TextView txt2;
-    protected @BindView(R.id.btn1) Button btn1;
-    protected @BindView(R.id.btn1_2) Button btn1_2;
-    protected @BindView(R.id.btn2) Button btn2;
-    protected @BindView(R.id.btn2_2) Button btn2_2;
-    protected @BindView(R.id.btn3) Button btn3;
-    protected @BindView(R.id.btn3_2) Button btn3_2;
-    protected @BindView(R.id.btn4) Button btn4;
-    protected @BindView(R.id.btn4_2) Button btn4_2;
 
     protected OnItemRecyclerListener listener;
     protected String data;
+    protected TextView txt1;
+    protected TextView txt2;
+    protected Button btn1;
+    protected Button btn1_2;
+    protected Button btn2;
+    protected Button btn2_2;
+    protected Button btn3;
+    protected Button btn3_2;
+    protected Button btn4;
+    protected Button btn4_2;
+
 
     //在Activity创建时调用，通常做一些初始化设置；
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_foundation);
-        ButterKnife.bind(this);
         data = getIntent().getStringExtra("data");
+        findView();
         initView();
         Log.e("shengming", getViewNameStr() + "onCreate: 开始状态,   传来参数data:" + data);
 
     }
+
 
     //在Activity即将可见时调用
     @Override
@@ -132,9 +131,8 @@ public abstract class FoundationActivity extends AppCompatActivity {
 
     public abstract void initView();
 
-    @OnClick({R.id.btn1, R.id.btn1_2, R.id.btn2, R.id.btn2_2, R.id.btn3, R.id.btn3_2, R.id.btn4,
-            R.id.btn4_2})
-    public void onBindClick(View view) {
+    @Override
+    public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btn1:
             case R.id.btn2:
@@ -154,5 +152,29 @@ public abstract class FoundationActivity extends AppCompatActivity {
     protected String getViewNameStr() {
         return txt1.getText().toString();
     }
+
+    private void findView() {
+        txt1 = findViewById(R.id.txt1);
+        txt2 = findViewById(R.id.txt2);
+        btn1 = findViewById(R.id.btn1);
+        btn1_2 = findViewById(R.id.btn1_2);
+        btn2 = findViewById(R.id.btn2);
+        btn2_2 = findViewById(R.id.btn2_2);
+        btn3 = findViewById(R.id.btn3);
+        btn3_2 = findViewById(R.id.btn3_2);
+        btn4 = findViewById(R.id.btn4);
+        btn4_2 = findViewById(R.id.btn4_2);
+        txt1.setOnClickListener(this);
+        txt2.setOnClickListener(this);
+        btn1.setOnClickListener(this);
+        btn1_2.setOnClickListener(this);
+        btn2.setOnClickListener(this);
+        btn2_2.setOnClickListener(this);
+        btn3.setOnClickListener(this);
+        btn3_2.setOnClickListener(this);
+        btn4.setOnClickListener(this);
+        btn4_2.setOnClickListener(this);
+    }
+
 
 }

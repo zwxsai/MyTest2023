@@ -1,6 +1,5 @@
 package com.example.mytest2023.module.Foundation;
 
-import android.graphics.drawable.AnimatedImageDrawable;
 import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 import android.text.Html;
@@ -10,30 +9,26 @@ import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.eric.android.view.ExpandableTextView;
 import com.example.mytest2023.R;
 import com.example.mytest2023.base.BaseActivity;
 import com.example.mytest2023.widget.other.CusLinearLayout;
 import com.example.mytest2023.widget.other.CusText;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
+import com.example.mytest2023.widget.other.ExpandableTextView;
 
 /**
  * Created by 钟文祥 on 2023-05-26.
  * Describer: 自定义view https://blog.csdn.net/shuo277/article/details/126234914
  */
-public class CusViewActivity extends BaseActivity {
+public class CusViewActivity extends BaseActivity implements View.OnClickListener {
 
-    @BindView(R.id.CusLinearLayout) CusLinearLayout cusLinearLayout;
-    @BindView(R.id.CusText) CusText cusText;
-    @BindView(R.id.image1) ImageView image1;
-    @BindView(R.id.obj1) TextView obj1;
-    @BindView(R.id.expand_tv1) ExpandableTextView expand_text_view1;
-    @BindView(R.id.expand_tv2) ExpandableTextView expand_text_view2;
-    @BindView(R.id.expand_tv3) ExpandableTextView expand_text_view3;
-    @BindView(R.id.expand_tv4) ExpandableTextView expand_text_view4;
+    private CusLinearLayout cusLinearLayout;
+    private CusText cusText;
+    private ImageView image1;
+    private TextView obj1;
+    private ExpandableTextView expand_text_view1;
+    private ExpandableTextView expand_text_view2;
+    private ExpandableTextView expand_text_view3;
+    private ExpandableTextView expand_text_view4;
 
     private AnimationDrawable animationDrawable;
 
@@ -95,18 +90,24 @@ public class CusViewActivity extends BaseActivity {
             "</code></pre>\n" +
             "<p>我们使用 LinearLayout 编写了一个登陆布局，使用纵向排列，从上到下分别是账号、密码和登陆按钮。</p>\n" +
             "<p>接着修改 LoginActivity 中的代码：</p>";
+    private CusLinearLayout CusLinearLayout;
+    private CusText CusText;
+    private ExpandableTextView expand_tv1;
+    private ExpandableTextView expand_tv2;
+    private ExpandableTextView expand_tv3;
+    private ExpandableTextView expand_tv4;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cus_view);
-        ButterKnife.bind(this);
+        findView();
         frameDonghua();
         bujianDonghua();
 
-//        expand_text_view1.setText(Html.fromHtml(
-//                "拉萨抗衰老的激发了快速的房间辣可视对讲福利卡圣诞节福利卡束带结发莱克斯顿解放啦可视对讲弗兰克绿卡技术的福利卡就是代理费卡技术的福利科技阿萨德冷风机阿萨德李逵负荆阿里时代峰峻阿里斯柯达解放啦可视对讲菲拉斯大姐夫卢卡斯大姐夫拉三等奖法拉克圣诞节法拉克三季度福利卡束带结发辣椒块豆腐卢卡斯对伐啦束带结发")
-//        );
+        //        expand_text_view1.setText(Html.fromHtml(
+        //                "拉萨抗衰老的激发了快速的房间辣可视对讲福利卡圣诞节福利卡束带结发莱克斯顿解放啦可视对讲弗兰克绿卡技术的福利卡就是代理费卡技术的福利科技阿萨德冷风机阿萨德李逵负荆阿里时代峰峻阿里斯柯达解放啦可视对讲菲拉斯大姐夫卢卡斯大姐夫拉三等奖法拉克圣诞节法拉克三季度福利卡束带结发辣椒块豆腐卢卡斯对伐啦束带结发")
+        //        );
         expand_text_view1.setText(Html.fromHtml(txt));
         expand_text_view2.setText(Html.fromHtml(txt));
         expand_text_view3.setText(Html.fromHtml(txt));
@@ -127,8 +128,8 @@ public class CusViewActivity extends BaseActivity {
     }
 
 
-    @OnClick({R.id.CusLinearLayout, R.id.CusText, R.id.image1})
-    public void onBindClick(View view) {
+    @Override
+    public void onClick(View view) {
         switch (view.getId()) {
             case R.id.CusLinearLayout:
                 break;
@@ -143,4 +144,20 @@ public class CusViewActivity extends BaseActivity {
                 break;
         }
     }
+
+    private void findView() {
+        CusLinearLayout = findViewById(R.id.CusLinearLayout);
+        CusText = findViewById(R.id.CusText);
+        image1 = findViewById(R.id.image1);
+        obj1 = findViewById(R.id.obj1);
+        expand_tv1 = findViewById(R.id.expand_tv1);
+        expand_tv2 = findViewById(R.id.expand_tv2);
+        expand_tv3 = findViewById(R.id.expand_tv3);
+        expand_tv4 = findViewById(R.id.expand_tv4);
+        CusLinearLayout.setOnClickListener(this);
+        CusText.setOnClickListener(this);
+        image1.setOnClickListener(this);
+    }
+
+
 }

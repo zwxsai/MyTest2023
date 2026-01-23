@@ -1,13 +1,13 @@
 package com.example.mytest2023.module.Home;
 
 import android.util.Log;
+import android.view.View;
 
 import com.example.mytest2023.R;
 import com.example.mytest2023.base.BaseFragment;
 import com.example.mytest2023.helper.UIHelper;
 
 import androidx.core.widget.NestedScrollView;
-import butterknife.BindView;
 
 /**
  * Created by 钟文祥 on 2023-04-14.
@@ -15,7 +15,7 @@ import butterknife.BindView;
  */
 public class Home2Fragment extends BaseFragment {
 
-    @BindView(R.id.rv_demo1_content) NestedScrollView rvDemo1Content;
+    private NestedScrollView rvDemo1Content;
     private int topHeight;
 
     public static Home2Fragment newInstance() {
@@ -29,7 +29,7 @@ public class Home2Fragment extends BaseFragment {
     }
 
     @Override
-    public void initView() {
+    public void initView(View view) {
         topHeight = UIHelper.dip2px(getActivity(), 100);
         Log.e("aaa1", "topHeight: " + topHeight);
 

@@ -1,7 +1,6 @@
 package com.example.mytest2023.module.mvvm;
 
 import android.os.Bundle;
-import android.view.View;
 
 import com.example.mytest2023.Api.Utils.BaseResource;
 
@@ -13,7 +12,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.databinding.ViewDataBinding;
-import androidx.lifecycle.ViewModelProviders;
+import androidx.lifecycle.ViewModelProvider;
 
 /**
  * Created by 钟文祥 on 2023/6/15.
@@ -39,7 +38,7 @@ import androidx.lifecycle.ViewModelProviders;
  * <p>
  * 性能优化
  * <a href="https://zhuanlan.zhihu.com/p/639316383">...</a>
- *
+ * <p>
  * Android ANR详解
  * https://blog.csdn.net/qq_34519487/article/details/113030181
  */
@@ -51,22 +50,22 @@ public abstract class BaseMvvmActivity<VM extends BaseViewModel, VDB extends Vie
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        setContentView(getLayoutId());
+        //        setContentView(getLayoutId());
         //初始化我们的binging
         mViewDataBind = DataBindingUtil.setContentView(this, getLayoutId());
         //给binding加上感知生命周期，AppCompatActivity就是lifeOwner
         mViewDataBind.setLifecycleOwner(this);
 
-//        mViewDataBind = AppCompatActivity.inflateBindingWithGeneric();
-//        View root = mViewDataBind.getRoot();
-//        setContentView(root);
+        //        mViewDataBind = AppCompatActivity.inflateBindingWithGeneric();
+        //        View root = mViewDataBind.getRoot();
+        //        setContentView(root);
 
 
         //获得泛型参数的实际类型
-//        Class<VM> vmClass =
-//                (Class<VM>) ((ParameterizedType) this.getClass().getGenericSuperclass())
-//                .getActualTypeArguments()[0];
-//        mViewModel = new ViewModelProvider(this).get(vmClass);
+        //        Class<VM> vmClass =
+        //                (Class<VM>) ((ParameterizedType) this.getClass().getGenericSuperclass())
+        //                .getActualTypeArguments()[0];
+        //        mViewModel = new ViewModelProvider(this).get(vmClass);
         //        mViewDataBind.setVariable(getBRVariableId(), mViewModel);
         createViewModel();
         afterCreate();
@@ -83,7 +82,7 @@ public abstract class BaseMvvmActivity<VM extends BaseViewModel, VDB extends Vie
                 //如果没有指定泛型参数，则默认使用BaseViewModel
                 modelClass = BaseViewModel.class;
             }
-            mViewModel = (VM) ViewModelProviders.of(this).get(modelClass);
+            mViewModel = (VM) (new ViewModelProvider(this)).get(modelClass);
         }
     }
 

@@ -1,12 +1,5 @@
 package com.example.mytest2023.module.viewpager2;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-import androidx.viewpager2.widget.ViewPager2;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-
 import android.os.Bundle;
 
 import com.example.mytest2023.R;
@@ -17,14 +10,18 @@ import com.google.android.material.tabs.TabLayoutMediator;
 import java.util.ArrayList;
 import java.util.List;
 
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+import androidx.viewpager2.widget.ViewPager2;
+
 /**
  * https://www.cnblogs.com/spiropentadiene/p/16847849.html tab和viewpager绑定
  * https://qa.1r1g.com/sf/ask/3876058161/  不绑定
  */
 public class ViewPager2Activity extends BaseActivity {
 
-    @BindView(R.id.tab) TabLayout tabLayout;
-    @BindView(R.id.viewpager2) ViewPager2 viewPager2;
+    private TabLayout tabLayout;
+    private ViewPager2 viewPager2;
 
 
     private List<Fragment> list = new ArrayList<>();
@@ -35,7 +32,8 @@ public class ViewPager2Activity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_pager2);
-        ButterKnife.bind(this);
+        tabLayout = findViewById(R.id.tab);
+        viewPager2 = findViewById(R.id.viewpager2);
 
         //添加Fragment
         list.add(BlankTestFragment.newInstance(title[0], "#03A9F4"));

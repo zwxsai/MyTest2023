@@ -9,8 +9,6 @@ import java.util.List;
 
 import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
-import butterknife.BindView;
-import butterknife.ButterKnife;
 
 /**
  * Created by 钟文祥 on 2019/7/26.
@@ -18,15 +16,16 @@ import butterknife.ButterKnife;
  */
 public class BaseTabActivity extends BaseActivity {
 
-    @BindView(R.id.tabLayout) TabLayout tabLayout;
-    @BindView(R.id.viewPager) ViewPager viewPager;
+
+    private TabLayout tabLayout;
+    private ViewPager viewPager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_base_tab);
-        ButterKnife.bind(this);
-
+        tabLayout = findViewById(R.id.tabLayout);
+        viewPager = findViewById(R.id.viewPager);
     }
 
     public void initView(List<String> titles, List<Fragment> fragments) {
@@ -34,6 +33,9 @@ public class BaseTabActivity extends BaseActivity {
         viewPager.setOffscreenPageLimit(2);
         tabLayout.setupWithViewPager(viewPager);
 
+
+        tabLayout = findViewById(R.id.tabLayout);
+        viewPager = findViewById(R.id.viewPager);
     }
 
 

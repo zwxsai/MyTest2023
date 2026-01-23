@@ -15,18 +15,16 @@ import com.example.mytest2023.widget.cusbanner.BaseViewPagerAdapter;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
 
 public class AutoViewPagerActivity extends BaseActivity {
 
-    @BindView(R.id.AutoViewPager) AutoViewPager autoViewPager;
+    private AutoViewPager autoViewPager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(com.example.mytest2023.R.layout.activity_auto_view_pager);
-        ButterKnife.bind(this);
+        autoViewPager = findViewById(R.id.AutoViewPager);
 
         List<BannerData> list = new ArrayList<>();
         list.add(new BannerData("http://pic9.iqiyipic" +

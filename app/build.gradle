@@ -275,11 +275,11 @@ dependencies {
     implementation 'com.readystatesoftware.systembartint:systembartint:1.0.3'
     //butterknife https://github.com/JakeWharton/butterknife
     //butterknife插件用不了，现在用idCreate  https://blog.csdn.net/u013937668/article/details/125682058
-    implementation 'com.jakewharton:butterknife:10.2.3'
-    androidTestImplementation 'junit:junit:4.12'
-    annotationProcessor 'com.jakewharton:butterknife-compiler:10.2.3'
+//    implementation 'com.jakewharton:butterknife:10.2.3'
+//
+//    annotationProcessor 'com.jakewharton:butterknife-compiler:10.2.3'
     //xrecyclerview  https://github.com/XRecyclerView/XRecyclerView
-    implementation 'com.jcodecraeer:xrecyclerview:1.6.0'
+//    implementation 'com.jcodecraeer:xrecyclerview:1.6.0'
 
     //    retrofit 请求                     --这两个包已经包含okhttp3和gson
     implementation 'com.squareup.retrofit2:retrofit:2.4.0'
@@ -290,7 +290,7 @@ dependencies {
     //    rxjava
     implementation 'com.squareup.retrofit2:adapter-rxjava2:2.4.0'
     //仿ios弹出框 https://github.com/Bigkoo/Android-AlertView
-    implementation 'com.bigkoo:alertview:1.0.3'
+//    implementation 'com.bigkoo:alertview:1.0.3'
     // 打印日志
     implementation 'com.squareup.okhttp3:logging-interceptor:3.4.1'
     //RXbiding
@@ -300,7 +300,7 @@ dependencies {
     //多种分组列表 https://github.com/donkingliang/GroupedRecyclerViewAdapter
     implementation 'com.github.donkingliang:GroupedRecyclerViewAdapter:2.4.3'
     //引导页 https://github.com/bingoogolapple/BGABanner-Android
-    implementation 'cn.bingoogolapple:bga-banner:2.2.4@aar'
+    implementation 'com.github.bingoogolapple:BGABanner-Android:3.0.1'
     //底部导航 https://github.com/chaychan/BottomBarLayout
     implementation 'com.github.chaychan:BottomBarLayout:2.0.2' //建议使用最新版本
 
@@ -340,16 +340,16 @@ dependencies {
     implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0'
 
     //mmkv
-    implementation "com.tencent:mmkv:1.0.23"
+    implementation "com.tencent:mmkv:1.2.13"
 
     //轮播  https://github.com/zhpanvip/BannerViewPager/blob/master/README_CN.md
     implementation 'com.github.zhpanvip:bannerviewpager:3.5.4'
 
-    //折叠文本
-    implementation 'com.eric.android.view:expandable-textview:1.2.1'
-
-    //分渠道
-    qqImplementation 'com.eric.android.view:expandable-textview:1.2.1'
+//    //折叠文本
+//    implementation 'com.eric.android.view:expandable-textview:1.2.1'
+//
+//    //分渠道
+//    qqImplementation 'com.eric.android.view:expandable-textview:1.2.1'
 
     //leakcanary 内存检测 https://blog.csdn.net/hello_1995/article/details/120075342
     debugImplementation "com.squareup.leakcanary:leakcanary-android:$leakcanaryVersion"
@@ -357,6 +357,10 @@ dependencies {
 //    implementation project(path: ':unityLibrary')
 //    implementation fileTree(dir: project(':unityLibrary').getprojectDir().tostring() + ('\\libs'), include: ['*.jar', '*.aar'])
     implementation files('libs/unityLibrary-debug.aar')
+
+
+    testImplementation 'org.testng:testng:6.9.6'
+    androidTestImplementation 'junit:junit:4.12'
 }
 
 //声明是要使用谷歌服务框架（这个一般放在gradle最下面）

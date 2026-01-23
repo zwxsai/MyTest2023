@@ -12,20 +12,17 @@ import com.example.mytest2023.helper.ToastUtil;
 import com.example.mytest2023.model.design.jianzao.UserItem;
 import com.example.mytest2023.module.mvp.presenter.UserPresenter;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
 
 /**
  * Created by 钟文祥 on 2023-05-05.
  * Describer:  mvp参考资料 https://blog.csdn.net/aishang5wpj/article/details/51384371
  */
-public class LoginTestActivityMVP extends BaseActivity {
+public class LoginTestActivityMVP extends BaseActivity implements View.OnClickListener {
 
-    @BindView(R.id.edit1) EditText edit1;
-    @BindView(R.id.edit2) EditText edit2;
-    @BindView(R.id.btn1) Button btn1;
-    @BindView(R.id.txt1) TextView txt1;
+    EditText edit1;
+    EditText edit2;
+    Button btn1;
+    TextView txt1;
 
     private UserPresenter presenter;
 
@@ -33,7 +30,7 @@ public class LoginTestActivityMVP extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mvpactivity);
-        ButterKnife.bind(this);
+        findView();
 
         presenter = new UserPresenter();
         presenter.rigerView(new IUserView() {
@@ -60,8 +57,8 @@ public class LoginTestActivityMVP extends BaseActivity {
         presenter.unRigerView();
     }
 
-    @OnClick({R.id.btn1})
-    public void onBindClick(View view) {
+    @Override
+    public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btn1:
                 UserItem item = new UserItem.Builder().id(2).name("张三").age(2).build();
@@ -69,5 +66,13 @@ public class LoginTestActivityMVP extends BaseActivity {
 
                 break;
         }
+    }
+
+    private void findView() {
+        edit1 = findViewById(R.id.edit1);
+        edit2 = findViewById(R.id.edit2);
+        btn1 = findViewById(R.id.btn1);
+        txt1 = findViewById(R.id.txt1);
+        btn1.setOnClickListener(this);
     }
 }

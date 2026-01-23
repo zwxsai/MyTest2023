@@ -9,10 +9,10 @@ import com.example.mytest2023.base.BaseActivity;
 import com.example.mytest2023.databinding.ActivityRoomMvvmBinding;
 import com.example.mytest2023.helper.ToastUtil;
 import com.example.mytest2023.room.bean.Student;
-import com.example.mytest2023.room.helper.DBInstance;
-import com.example.mytest2023.room.helper.OnDaoInsertListener;
-import com.example.mytest2023.room.helper.OnDaoFindsListener;
 import com.example.mytest2023.room.dao.StudentDao;
+import com.example.mytest2023.room.helper.DBInstance;
+import com.example.mytest2023.room.helper.OnDaoFindsListener;
+import com.example.mytest2023.room.helper.OnDaoInsertListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,7 +21,7 @@ import androidx.databinding.DataBindingUtil;
 import androidx.databinding.ObservableField;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProviders;
+import androidx.lifecycle.ViewModelProvider;
 
 public class RoomMvvmActivity extends BaseActivity {
     private static final String TAG = "RoomMvvmActivity";
@@ -65,7 +65,7 @@ public class RoomMvvmActivity extends BaseActivity {
 
         //4、viewModel 里面有MutableLiveData
         binding.setLifecycleOwner(this);
-        viewModel = ViewModelProviders.of(this).get(RoomMvvmViewModel.class);
+        viewModel = (new ViewModelProvider(this)).get(RoomMvvmViewModel.class);
         binding.setRoomMvvmViewModel(viewModel);
 
         addObserve();
