@@ -358,9 +358,24 @@ dependencies {
 //    implementation fileTree(dir: project(':unityLibrary').getprojectDir().tostring() + ('\\libs'), include: ['*.jar', '*.aar'])
     implementation files('libs/unityLibrary-debug.aar')
 
-
     testImplementation 'org.testng:testng:6.9.6'
     androidTestImplementation 'junit:junit:4.12'
+
+//    androidTestImplementation 'com.android.support.test:runner:1.0.2'
+//    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+//    testImplementation 'junit:junit:4.13'
+//
+//    androidTestImplementation "io.mockk:mockk-android:1.14.0"
+//    testImplementation "io.mockk:mockk:1.14.0"
+//    testImplementation "org.mockito:mockito-core:4.11.0"
+//    testImplementation "org.mockito:mockito-inline:4.11.0"
+
+
+    //python  https://blog.csdn.net/m0_46049609/article/details/146998179
+    //https://cloud.tencent.com/developer/article/2478181
+//    https://cloud.tencent.com/developer/article/2036822
+//    https://comate.baidu.com/zh/page/6cx3yrbq5tm
+
 }
 
 //声明是要使用谷歌服务框架（这个一般放在gradle最下面）
