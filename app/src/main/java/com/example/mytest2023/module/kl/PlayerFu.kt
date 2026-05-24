@@ -4,7 +4,7 @@ import android.util.Log
 
 /**
  *Created by 钟文祥 on 2023/10/31.
- *Describer:
+ *Describer:111
  */
 open class PlayerFu( //类默认都是不能被继承的，加上open就能被继承
     _id: Int, _name: String, var age: Int = 32
